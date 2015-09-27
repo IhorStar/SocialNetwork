@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -53,6 +54,9 @@ public class RegisterServlet extends HttpServlet {
 
             try {
                 userDAO.addUser(user);
+                User regUser = userDAO.getUserBy(user.getEmail(), user.getPassword());
+                HttpSession session = request.getSession(true);
+                session.setAttribute("user", regUser);
                 response.sendRedirect("/home.jsp");
             } catch (DAOException e) {
                 e.printStackTrace();
