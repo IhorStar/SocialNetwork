@@ -1,8 +1,11 @@
 package servlets;
 
+import dao.CommentDAO;
 import dao.DAOException;
 import dao.NewsDAO;
+import dao.implementation.CommentDAOImpl;
 import dao.implementation.NewsDAOImpl;
+import entity.Comment;
 import entity.News;
 import entity.User;
 
@@ -17,28 +20,29 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet("/addNews")
-public class AddNewsServlet extends HttpServlet {
+@WebServlet("/deleteComment")
+public class DeleteCommentServlet extends HttpServlet {
 
     @Override
-    protected void  doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int comment = Integer.parseInt(request.getParameter("commentId"));
         HttpSession session = request.getSession(true);
         User user = (User)session.getAttribute("user");
-        News news = new News();
-        news.setUserId(user.getUserId());
-        news.setDescription(request.getParameter("description"));
+
 
         try {
             NewsDAO newsDAO = new NewsDAOImpl();
-            newsDAO.addNews(news);
-            List allNews = newsDAO.getAllNews(user.getUserId());
-            session.setAttribute("allNews", allNews);
+            CommentDAO commentDAO = new CommentDAOImpl();
+            commentDAO.deleteCommentById(comment);
+            List<News> allNews = newsDAO.getAllNews(user.getUserId());
+            List<List<Comment>> allComment = commentDAO.getAllBy(allNews);
+            session.setAttribute("allComment", allComment);
             response.sendRedirect("/home.jsp");
         } catch (DAOException e) {
             e.printStackTrace();
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             PrintWriter out = response.getWriter();
-            out.println("<font color=red>Save news failed, please try again.</font>");
+            out.println("<font color=red>Delete comment failed, please try again.</font>");
             dispatcher.include(request, response);
         }
     }

@@ -3,9 +3,12 @@ package dao;
 
 import entity.Relation;
 
+import java.util.List;
+
 public interface RelationDAO {
-    public void addRelation(Relation relation) throws DAOException;
-    public Relation getRelationById(int relationId) throws DAOException;
-    public void updateRelation(Relation relation) throws DAOException;
-    public void deleteRelation(Relation relation) throws DAOException;
+    void addRelation(int user1Id, int user2Id, int relationTypeId) throws DAOException;
+    Relation getRelationById(int relationId) throws DAOException;
+    void updateRelation(Relation relation) throws DAOException;
+    void deleteRelationBy(int user1Id, int user2Id) throws DAOException;
+    List<Relation> getAllRelationBy(int userId) throws DAOException;
 }

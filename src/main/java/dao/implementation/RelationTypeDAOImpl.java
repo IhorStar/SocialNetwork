@@ -106,14 +106,14 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         }
     }
 
-    public void deleteRelationType(RelationType relationType) throws DAOException {
+    public void deleteRelationTypeById(int relationTypeId) throws DAOException {
         String query = "delete from relation_type where relation_type_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setInt(1, relationType.getRelationTypeId());
+            statement.setInt(1, relationTypeId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

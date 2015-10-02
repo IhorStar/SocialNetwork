@@ -1,5 +1,7 @@
 package servlets;
 
+
+
 import dao.DAOException;
 import dao.NewsDAO;
 import dao.implementation.NewsDAOImpl;
@@ -17,28 +19,31 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
-@WebServlet("/addNews")
-public class AddNewsServlet extends HttpServlet {
+
+@WebServlet("/updateNews")
+public class UpdateNewsServlet extends HttpServlet {
 
     @Override
-    protected void  doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected  void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession(true);
         User user = (User)session.getAttribute("user");
         News news = new News();
         news.setUserId(user.getUserId());
+        news.setNewsId(Integer.parseInt(request.getParameter("newsId")));
         news.setDescription(request.getParameter("description"));
 
         try {
             NewsDAO newsDAO = new NewsDAOImpl();
-            newsDAO.addNews(news);
+            newsDAO.updateNews(news);
             List allNews = newsDAO.getAllNews(user.getUserId());
             session.setAttribute("allNews", allNews);
             response.sendRedirect("/home.jsp");
-        } catch (DAOException e) {
+        }
+        catch(DAOException e) {
             e.printStackTrace();
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             PrintWriter out = response.getWriter();
-            out.println("<font color=red>Save news failed, please try again.</font>");
+            out.println("<font color=red>Update news failed, please try again.</font>");
             dispatcher.include(request, response);
         }
     }

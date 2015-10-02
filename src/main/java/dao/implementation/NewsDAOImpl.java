@@ -6,7 +6,9 @@ import entity.News;
 
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class NewsDAOImpl implements NewsDAO {
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
@@ -121,14 +123,14 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
-    public void deleteNews(News news) throws DAOException{
+    public void deleteNewsById(int newsId) throws DAOException{
         String query = "delete from news where news_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setInt(1, news.getNewsId());
+            statement.setInt(1, newsId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -146,5 +148,49 @@ public class NewsDAOImpl implements NewsDAO {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<News> getAllNews(int userId) throws DAOException {
+        String query = "select * from news where user = ?;";
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<News> newsList = null;
+
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, userId);
+            resultSet = statement.executeQuery();
+            newsList = new ArrayList<News>();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("news_id");
+                int user = resultSet.getInt("user");
+                String description = resultSet.getString("description");
+                String date = resultSet.getString("date");
+                String time = resultSet.getString("time");
+                News news = new News();
+                news.setNewsId(id);
+                news.setUserId(user);
+                news.setDescription(description);
+                news.setDate(date);
+                news.setTime(time);
+                newsList.add(news);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return newsList;
     }
 }

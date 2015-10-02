@@ -3,9 +3,12 @@ package dao.implementation;
 import dao.CommentDAO;
 import dao.DAOException;
 import entity.Comment;
+import entity.News;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class CommentDAOImpl implements CommentDAO {
@@ -123,14 +126,14 @@ public class CommentDAOImpl implements CommentDAO {
         }
     }
 
-    public void deleteComment(Comment comment) throws  DAOException{
+    public void deleteCommentById(int commentId) throws  DAOException{
         String query = "delete from comment where comment_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
             statement = connection.prepareStatement(query);
-            statement.setInt(1, comment.getNewsId());
+            statement.setInt(1, commentId);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -148,5 +151,65 @@ public class CommentDAOImpl implements CommentDAO {
                 e.printStackTrace();
             }
         }
+    }
+
+    public List<Comment> getAllBy(int newsId) throws DAOException {
+        String query = "select * from comment where news = ?;";
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        List<Comment> commentList = null;
+
+        try {
+            statement = connection.prepareStatement(query);
+            statement.setInt(1, newsId);
+            resultSet = statement.executeQuery();
+            commentList = new ArrayList<Comment>();
+            while (resultSet.next()) {
+                int commentId = resultSet.getInt("comment_id");
+                int id = resultSet.getInt("news");
+                int userId = resultSet.getInt("user");
+                String text = resultSet.getString("text");
+                String date = resultSet.getString("date");
+                String time = resultSet.getString("time");
+                Comment comment = new Comment();
+                comment.setCommentId(commentId);
+                comment.setNewsId(id);
+                comment.setUserId(userId);
+                comment.setText(text);
+                comment.setDate(date);
+                comment.setTime(time);
+                commentList.add(comment);
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (statement != null) {
+                    statement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return commentList;
+    }
+
+    public List<List<Comment>> getAllBy(List<News> allNews) throws DAOException {
+        List<List<Comment>> list = new ArrayList<List<Comment>>();
+        for(News news : allNews) {
+            List<Comment> commentList = getAllBy(news.getNewsId());
+            list.add(commentList);
+        }
+        return list;
     }
 }
