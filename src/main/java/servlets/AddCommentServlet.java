@@ -23,7 +23,7 @@ import java.util.List;
 @WebServlet("/addComment")
 public class AddCommentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
         Comment comment = new Comment();
         comment.setUserId(user.getUserId());
