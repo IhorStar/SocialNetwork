@@ -60,9 +60,7 @@ public class LoginServlet extends HttpServlet {
                         HttpSession session = request.getSession(true);
                         session.setAttribute("user", user);
                         session.setAttribute("userDAO", userDAO);
-                        session.setAttribute("allNews", allNews);
                         session.setAttribute("allComment", allComment);
-                        session.setAttribute("allUser", allUser);
                         session.setAttribute("allRelation", allRelation);
                         response.sendRedirect("/home.jsp");
                     }
