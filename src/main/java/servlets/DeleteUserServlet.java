@@ -21,6 +21,7 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        final int ADMIN = 1;
         int userId = Integer.parseInt(request.getParameter("userId"));
         HttpSession session = request.getSession(true);
         User user = (User)session.getAttribute("user");
@@ -30,7 +31,7 @@ public class DeleteUserServlet extends HttpServlet {
             userDAO.deleteUserById(userId);
             List allUsers = userDAO.getAllUsers();
             session.setAttribute("allUsers", allUsers);
-            if(user.getRoleId() == 1) {
+            if(user.getRoleId() == ADMIN) {
                 response.sendRedirect("/admin.jsp");
             }
             else {
