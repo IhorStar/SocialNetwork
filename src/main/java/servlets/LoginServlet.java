@@ -8,6 +8,8 @@ import dao.implementation.UserDAOImpl;
 import entity.Comment;
 import entity.News;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import service.AuthorizationService;
 import service.implementation.AuthorizationServiceImpl;
 
@@ -24,6 +26,7 @@ import java.util.List;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(LoginServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -78,7 +81,7 @@ public class LoginServlet extends HttpServlet {
                     dispatcher.include(request, response);
                 }
             } catch (DAOException e) {
-                e.printStackTrace();
+                log.error("Database connection problem", e);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.html");
                 PrintWriter out = response.getWriter();
                 out.println("<font color=red>No user found with given email and password, please register first.</font>");

@@ -4,6 +4,8 @@ package dao.implementation;
 import dao.DAOException;
 import dao.UserDAO;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
+    private static final Logger log = LogManager.getLogger(UserDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
 
     public void addUser(User user) throws DAOException {
@@ -29,7 +32,7 @@ public class UserDAOImpl implements UserDAO {
             statement.setInt(4, user.getRoleId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -63,7 +66,7 @@ public class UserDAOImpl implements UserDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -101,7 +104,7 @@ public class UserDAOImpl implements UserDAO {
             }
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -135,7 +138,7 @@ public class UserDAOImpl implements UserDAO {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -161,7 +164,7 @@ public class UserDAOImpl implements UserDAO {
             statement.setInt(1, userId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
 
         }
         finally {
@@ -198,7 +201,7 @@ public class UserDAOImpl implements UserDAO {
                 userList.add(user);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {

@@ -8,6 +8,8 @@ import dao.implementation.NewsDAOImpl;
 import entity.Comment;
 import entity.News;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +24,7 @@ import java.util.List;
 
 @WebServlet("/deleteComment")
 public class DeleteCommentServlet extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(DeleteCommentServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,7 +42,7 @@ public class DeleteCommentServlet extends HttpServlet {
             session.setAttribute("allComment", allComment);
             response.sendRedirect("/home.jsp");
         } catch (DAOException e) {
-            e.printStackTrace();
+            log.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             PrintWriter out = response.getWriter();
             out.println("<font color=red>Delete comment failed, please try again.</font>");

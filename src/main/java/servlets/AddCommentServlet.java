@@ -8,6 +8,8 @@ import dao.implementation.NewsDAOImpl;
 import entity.Comment;
 import entity.News;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +24,9 @@ import java.util.List;
 
 @WebServlet("/addComment")
 public class AddCommentServlet extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(AddCommentServlet.class);
+
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
@@ -40,7 +45,7 @@ public class AddCommentServlet extends HttpServlet {
             response.sendRedirect("/home.jsp");
         }
         catch (DAOException e) {
-            e.printStackTrace();
+            log.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             PrintWriter out = response.getWriter();
             out.println("<font color=red>Add comment failed, please try again.</font>");

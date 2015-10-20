@@ -4,6 +4,8 @@ import dao.DAOException;
 import dao.RelationDAO;
 import dao.implementation.RelationDAOImpl;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,6 +20,7 @@ import java.util.List;
 
 @WebServlet("/deleteFriend")
 public class DeleteFriendServlet extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(DeleteFriendServlet.class);
 
     @Override
     protected  void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -35,7 +38,7 @@ public class DeleteFriendServlet extends HttpServlet {
             out.println("<font color=green>Cancel friendship success.</font>");
             dispatcher.include(request, response);
         } catch (DAOException e) {
-            e.printStackTrace();
+            log.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             PrintWriter out = response.getWriter();
             out.println("<font color=green>Cancel friendship failed, please try again.</font>");

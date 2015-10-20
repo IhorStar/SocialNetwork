@@ -7,6 +7,8 @@ import dao.NewsDAO;
 import dao.implementation.NewsDAOImpl;
 import entity.News;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +24,7 @@ import java.util.List;
 
 @WebServlet("/updateNews")
 public class UpdateNewsServlet extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(UpdateNewsServlet.class);
 
     @Override
     protected  void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -40,7 +43,7 @@ public class UpdateNewsServlet extends HttpServlet {
             response.sendRedirect("/home.jsp");
         }
         catch(DAOException e) {
-            e.printStackTrace();
+            log.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             PrintWriter out = response.getWriter();
             out.println("<font color=red>Update news failed, please try again.</font>");

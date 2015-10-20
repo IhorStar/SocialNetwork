@@ -4,6 +4,8 @@ import dao.DAOException;
 import dao.UserDAO;
 import dao.implementation.UserDAOImpl;
 import entity.User;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,10 +21,10 @@ import java.util.List;
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
+    private static final Logger log = LogManager.getLogger(RegisterServlet.class);
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
 
         String name = request.getParameter("name");
         String password = request.getParameter("password");
@@ -55,6 +57,7 @@ public class RegisterServlet extends HttpServlet {
 
             try {
                 userDAO.addUser(user);
+                log.info("User registered with email: " + email);
                 User regUser = userDAO.getUserBy(user.getEmail(), user.getPassword());
                 List allUsers = userDAO.getAllUsers();
                 HttpSession session = request.getSession(true);
@@ -62,7 +65,7 @@ public class RegisterServlet extends HttpServlet {
                 session.setAttribute("allUsers", allUsers);
                 response.sendRedirect("/home.jsp");
             } catch (DAOException e) {
-                e.printStackTrace();
+                log.error("Database connection problem", e);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/register.html");
                 PrintWriter out = response.getWriter();
                 out.println("<font color=red>Registration failed, please try again.</font>");

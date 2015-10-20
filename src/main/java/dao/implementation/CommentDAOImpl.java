@@ -4,6 +4,9 @@ import dao.CommentDAO;
 import dao.DAOException;
 import entity.Comment;
 import entity.News;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,6 +15,7 @@ import java.util.List;
 
 
 public class CommentDAOImpl implements CommentDAO {
+    private static  final Logger log = LogManager.getLogger(CommentDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
 
     private Timestamp getDate() {
@@ -40,7 +44,7 @@ public class CommentDAOImpl implements CommentDAO {
             statement.setInt(6, comment.getUserId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -76,7 +80,7 @@ public class CommentDAOImpl implements CommentDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -110,7 +114,7 @@ public class CommentDAOImpl implements CommentDAO {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -136,7 +140,7 @@ public class CommentDAOImpl implements CommentDAO {
             statement.setInt(1, commentId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
 
         }
         finally {
@@ -183,7 +187,7 @@ public class CommentDAOImpl implements CommentDAO {
 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {

@@ -3,6 +3,8 @@ package dao.implementation;
 import dao.DAOException;
 import dao.RelationTypeDAO;
 import entity.RelationType;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,6 +13,7 @@ import java.sql.SQLException;
 
 
 public class RelationTypeDAOImpl implements RelationTypeDAO {
+    private static final Logger log = LogManager.getLogger(RelationTypeDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
 
 
@@ -26,7 +29,7 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
             statement.setString(2, relationType.getRelationTypeName());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -58,7 +61,7 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -90,7 +93,7 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -116,7 +119,7 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
             statement.setInt(1, relationTypeId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
 
         }
         finally {

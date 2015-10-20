@@ -3,6 +3,8 @@ package dao.implementation;
 import dao.DAOException;
 import dao.NewsDAO;
 import entity.News;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import java.sql.*;
@@ -11,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 
 public class NewsDAOImpl implements NewsDAO {
+    private static final Logger log = LogManager.getLogger(NewsDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
 
     private Timestamp getDate() {
@@ -37,7 +40,7 @@ public class NewsDAOImpl implements NewsDAO {
             statement.setInt(5, news.getUserId());
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -72,7 +75,7 @@ public class NewsDAOImpl implements NewsDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -107,7 +110,7 @@ public class NewsDAOImpl implements NewsDAO {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -133,7 +136,7 @@ public class NewsDAOImpl implements NewsDAO {
             statement.setInt(1, newsId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
 
         }
         finally {
@@ -177,7 +180,7 @@ public class NewsDAOImpl implements NewsDAO {
                 newsList.add(news);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {

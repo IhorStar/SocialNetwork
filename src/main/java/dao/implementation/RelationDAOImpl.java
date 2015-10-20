@@ -3,6 +3,8 @@ package dao.implementation;
 import dao.DAOException;
 import dao.RelationDAO;
 import entity.Relation;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,6 +15,7 @@ import java.util.List;
 
 
 public class RelationDAOImpl implements RelationDAO {
+    private  static final Logger log = LogManager.getLogger(RelationDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
 
     public void addRelation(int user1Id, int user2Id, int relationTypeId) throws DAOException {
@@ -28,7 +31,7 @@ public class RelationDAOImpl implements RelationDAO {
             statement.setInt(3, relationTypeId);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -62,7 +65,7 @@ public class RelationDAOImpl implements RelationDAO {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -96,7 +99,7 @@ public class RelationDAOImpl implements RelationDAO {
             statement.executeUpdate();
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
@@ -123,7 +126,7 @@ public class RelationDAOImpl implements RelationDAO {
             statement.setInt(2, user2Id);
             statement.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
 
         }
         finally {
@@ -167,7 +170,7 @@ public class RelationDAOImpl implements RelationDAO {
             }
         }
         catch (SQLException e) {
-            e.printStackTrace();
+            log.error("Cannot execute SQL", e);
         }
         finally {
             try {
