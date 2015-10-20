@@ -40,12 +40,20 @@
       <artifactId>servlet-api</artifactId>
       <version>3.0-alpha-1</version>
     </dependency>
+
+      <dependency>
+          <groupId>jstl</groupId>
+          <artifactId>jstl</artifactId>
+          <version>1.2</version>
+      </dependency>
+
   </dependencies>
 
   <build>
     <finalName>SocialNetwork</finalName>
 
     <plugins>
+
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -60,6 +68,7 @@
           <failOnMissingWebXml>false</failOnMissingWebXml>
         </configuration>
       </plugin>
+
     </plugins>
   </build>
 </project>

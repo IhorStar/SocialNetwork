@@ -55,7 +55,6 @@ public class LoginServlet extends HttpServlet {
                         RelationDAO relationDAO = new RelationDAOImpl();
                         List<News> allNews = newsDAO.getAllNews(user.getUserId());
                         List<List<Comment>> allComment = commentDAO.getAllBy(allNews);
-                        List allUser = userDAO.getAllUsers();
                         List allRelation = relationDAO.getAllRelationBy(user.getUserId());
                         HttpSession session = request.getSession(true);
                         session.setAttribute("user", user);
@@ -65,10 +64,10 @@ public class LoginServlet extends HttpServlet {
                         response.sendRedirect("/home.jsp");
                     }
                     if(authorizationService.isAdmin(user)) {
-                        List allUser = userDAO.getAllUsers();
+                        List allUsers = userDAO.getAllUsers();
                         HttpSession session = request.getSession(true);
                         session.setAttribute("user", user);
-                        session.setAttribute("allUser", allUser);
+                        session.setAttribute("allUsers", allUsers);
                         response.sendRedirect("/admin.jsp");
                     }
                 }

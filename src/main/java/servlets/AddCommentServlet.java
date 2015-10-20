@@ -35,8 +35,8 @@ public class AddCommentServlet extends HttpServlet {
             CommentDAO commentDAO = new CommentDAOImpl();
             commentDAO.addComment(comment);
             List<News> allNews = newsDAO.getAllNews(user.getUserId());
-            List<List<Comment>> allComment = commentDAO.getAllBy(allNews);
-            session.setAttribute("allComment", allComment);
+            List<List<Comment>> allComments = commentDAO.getAllBy(allNews);
+            session.setAttribute("allComments", allComments);
             response.sendRedirect("/home.jsp");
         }
         catch (DAOException e) {
