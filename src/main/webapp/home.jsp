@@ -6,7 +6,11 @@
     <title>Home Page</title>
 </head>
 <body>
-<h3>Hello ${user.getName()}</h3>
+<div class="i18n">
+    <a href="<c:url value='/I18N' />">En</a>
+    <a href="<c:url value='/I18N' />">Ru</a>
+</div>
+<h3>${messages.get("greetings")} ${user.getName()}</h3>
 <strong>Your email</strong>: ${user.getEmail()}
 <br>
 <br>
