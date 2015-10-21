@@ -27,6 +27,20 @@ public class MessagesBundle {
         bundle = ResourceBundle.getBundle("MessagesBundle", locale);
 
         messages.put("greetings", bundle.getString("greetings"));
+        messages.put("yourEmail", bundle.getString("yourEmail"));
+        messages.put("newsContainer", bundle.getString("newsContainer"));
+        messages.put("deleteNews", bundle.getString("deleteNews"));
+        messages.put("fieldForNews", bundle.getString("fieldForNews"));
+        messages.put("enterNews", bundle.getString("enterNews"));
+        messages.put("fieldForEditNews", bundle.getString("fieldForEditNews"));
+        messages.put("selectNews", bundle.getString("selectNews"));
+        messages.put("editNews", bundle.getString("editNews"));
+        messages.put("fieldForAddComment", bundle.getString("fieldForAddComment"));
+        messages.put("selectNewsToAddComment", bundle.getString("selectNewsToAddComment"));
+        messages.put("addComment", bundle.getString("addComment"));
+        messages.put("friendList", bundle.getString("friendList"));
+        messages.put("addToFriend", bundle.getString("addToFriend"));
+        messages.put("cancelFriendship", bundle.getString("cancelFriendship"));
 
         return messages;
     }
