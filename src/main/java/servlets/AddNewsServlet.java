@@ -39,8 +39,10 @@ public class AddNewsServlet extends HttpServlet {
         } catch (DAOException e) {
             log.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
-            PrintWriter out = response.getWriter();
+            request.setAttribute("errorMessage", "Save news failed, please try again.");
+            /*PrintWriter out = response.getWriter();
             out.println("<font color=red>Save news failed, please try again.</font>");
+            */
             dispatcher.include(request, response);
         }
     }

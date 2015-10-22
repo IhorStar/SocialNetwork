@@ -29,7 +29,7 @@ public class MessagesBundle {
         messages.put("greetings", bundle.getString("greetings"));
         messages.put("yourEmail", bundle.getString("yourEmail"));
         messages.put("newsContainer", bundle.getString("newsContainer"));
-        messages.put("deleteNews", bundle.getString("deleteNews"));
+        messages.put("delete", bundle.getString("delete"));
         messages.put("fieldForNews", bundle.getString("fieldForNews"));
         messages.put("enterNews", bundle.getString("enterNews"));
         messages.put("fieldForEditNews", bundle.getString("fieldForEditNews"));

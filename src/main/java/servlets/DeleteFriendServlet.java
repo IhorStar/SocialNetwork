@@ -34,14 +34,18 @@ public class DeleteFriendServlet extends HttpServlet {
             List allRelation = relationDAO.getAllRelationBy(user.getUserId());
             session.setAttribute("allRelation", allRelation);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
-            PrintWriter out = response.getWriter();
+            request.setAttribute("successMessage", "Cancel friendship success.");
+            /*PrintWriter out = response.getWriter();
             out.println("<font color=green>Cancel friendship success.</font>");
+            */
             dispatcher.include(request, response);
         } catch (DAOException e) {
             log.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
-            PrintWriter out = response.getWriter();
+            request.setAttribute("errorMessage", "Cancel friendship failed, please try again.");
+            /*PrintWriter out = response.getWriter();
             out.println("<font color=green>Cancel friendship failed, please try again.</font>");
+            */
             dispatcher.include(request, response);
         }
     }

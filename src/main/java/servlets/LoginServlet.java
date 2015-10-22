@@ -43,9 +43,12 @@ public class LoginServlet extends HttpServlet {
         }
         if(errorMessage != null) {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.html");
-            PrintWriter out = response.getWriter();
+            request.setAttribute("errorMessage", errorMessage);
+            /*PrintWriter out = response.getWriter();
             out.println("<font color=red>" + errorMessage + "</font>");
+            */
             dispatcher.include(request,response);
+
         }
         else {
             try {
@@ -76,15 +79,19 @@ public class LoginServlet extends HttpServlet {
                 }
                 else {
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.html");
-                    PrintWriter out = response.getWriter();
+                    request.setAttribute("errorMessage", "Email or password invalid.");
+                    /*PrintWriter out = response.getWriter();
                     out.println("<font color=red>Email or password invalid.</font>");
+                    */
                     dispatcher.include(request, response);
                 }
             } catch (DAOException e) {
                 log.error("Database connection problem", e);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.html");
-                PrintWriter out = response.getWriter();
+                request.setAttribute("errorMessage", "No user found with given email and password, please register first.");
+                /*PrintWriter out = response.getWriter();
                 out.println("<font color=red>No user found with given email and password, please register first.</font>");
+                */
                 dispatcher.include(request, response);
             }
         }

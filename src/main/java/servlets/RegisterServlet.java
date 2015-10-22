@@ -42,8 +42,10 @@ public class RegisterServlet extends HttpServlet {
         }
         if(errorMessage != null) {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/register.html");
-            PrintWriter out = response.getWriter();
+            request.setAttribute("errorMessage", errorMessage);
+            /*PrintWriter out = response.getWriter();
             out.println("<font color=red>" + errorMessage + "</font>");
+            */
             dispatcher.include(request, response);
 
         }
@@ -67,8 +69,10 @@ public class RegisterServlet extends HttpServlet {
             } catch (DAOException e) {
                 log.error("Database connection problem", e);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/register.html");
-                PrintWriter out = response.getWriter();
+                request.setAttribute("errorMessage","Registration failed, please try again.");
+                /*PrintWriter out = response.getWriter();
                 out.println("<font color=red>Registration failed, please try again.</font>");
+                */
                 dispatcher.include(request, response);
             }
         }

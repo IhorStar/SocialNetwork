@@ -33,14 +33,18 @@ public class AddToFriendServlet extends HttpServlet {
             RelationDAO relationDAO = new RelationDAOImpl();
             relationDAO.addRelation(user.getUserId(), user2Id,relationTypeId);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
-            PrintWriter out = response.getWriter();
+            request.setAttribute("successMessage", "Sending friend request success.");
+            /*PrintWriter out = response.getWriter();
             out.println("<font color=green>Sending friend request success.</font>");
+            */
             dispatcher.include(request, response);
         } catch (DAOException e) {
             log.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
-            PrintWriter out = response.getWriter();
+            request.setAttribute("errorMessage", "Sending friend request failed, please try again.");
+            /*PrintWriter out = response.getWriter();
             out.println("<font color=red>Sending friend request failed, please try again.</font>");
+            */
             dispatcher.include(request, response);
         }
     }

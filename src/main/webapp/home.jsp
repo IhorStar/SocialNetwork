@@ -23,11 +23,11 @@
 <div class="news-container">
     <c:forEach var="news" items="${allNews}">
             ${news.getDescription()}
-            <a href="<c:url value='/deleteNews' />">delete</a>
+            <a href="<c:url value='/deleteNews' />">${messages.get("delete")}</a>
             <br>
             <c:forEach var="commentNews" items="${allComments}">
                 ${commentNews.getText()}
-                <a href="<c:url value='/deleteComment'/>">delete</a>
+                <a href="<c:url value='/deleteComment'/>">${messages.get("delete")}</a>
             </c:forEach>
     </c:forEach>
 </div>
@@ -35,6 +35,7 @@
 <br>
 <h3>${messages.get("fieldForNews")}</h3>
 <form action="addNews" method="get">
+    <div style="color: #FF0000;">${errorMessage}</div>
     <p>${messages.get("enterNews")}</p>
     <p><textarea rows="10" cols="50"></textarea></p>
     <p><input type="submit" value="Add News"></p>
@@ -43,6 +44,7 @@
 <br>
 <h3>${messages.get("fieldForEditNews")}</h3>
 <form action="updateNews" method="get">
+    <div style="color: #FF0000;">${errorMessage}</div>
     <p><b>${messages.get("selectNews")}:</b></p>
     <select name="newsId">
         <c:forEach var="news" items="${allNews}">
@@ -58,6 +60,7 @@
 <br>
 <h3>${messages.get("fieldForAddComment")}</h3>
 <form action="addComment" method="get">
+    <div style="color: #FF0000;">${errorMessage}</div>
     <p>${messages.get("selectNewsToAddComment")}:</p>
     <select name="newsId">
         <c:forEach var="news" items="${allNews}">

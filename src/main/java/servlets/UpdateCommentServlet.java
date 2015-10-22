@@ -48,8 +48,10 @@ public class UpdateCommentServlet extends HttpServlet {
         } catch (DAOException e) {
             log.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
-            PrintWriter out = response.getWriter();
+            request.setAttribute("errorMessage", "Update comment failed, please try again.");
+            /*PrintWriter out = response.getWriter();
             out.println("<font color=red>Update comment failed, please try again.</font>");
+            */
             dispatcher.include(request, response);
         }
 
