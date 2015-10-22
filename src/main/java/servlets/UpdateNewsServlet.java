@@ -1,12 +1,11 @@
 package servlets;
 
-
-
 import dao.DAOException;
 import dao.NewsDAO;
 import dao.implementation.NewsDAOImpl;
 import entity.News;
 import entity.User;
+import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -18,9 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-
 
 @WebServlet("/updateNews")
 public class UpdateNewsServlet extends HttpServlet {
@@ -34,6 +31,8 @@ public class UpdateNewsServlet extends HttpServlet {
         news.setUserId(user.getUserId());
         news.setNewsId(Integer.parseInt(request.getParameter("newsId")));
         news.setDescription(request.getParameter("description"));
+        MessagesBundle messagesBundle = new MessagesBundle();
+        String errorMessage = messagesBundle.getMessages().get("updateNewsFailed");
 
         try {
             NewsDAO newsDAO = new NewsDAOImpl();
@@ -45,10 +44,7 @@ public class UpdateNewsServlet extends HttpServlet {
         catch(DAOException e) {
             log.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
-            request.setAttribute("errorMessage", "Update news failed, please try again.");
-            /*PrintWriter out = response.getWriter();
-            out.println("<font color=red>Update news failed, please try again.</font>");
-            */
+            request.setAttribute("errorMessage", errorMessage);
             dispatcher.include(request, response);
         }
     }

@@ -8,6 +8,7 @@ import dao.implementation.UserDAOImpl;
 import entity.Comment;
 import entity.News;
 import entity.User;
+import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.AuthorizationService;
@@ -21,7 +22,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet("/login")
@@ -32,21 +32,19 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String email = request.getParameter("email");
         String password = request.getParameter(("password"));
-        String errorMessage = null;
         AuthorizationService authorizationService = new AuthorizationServiceImpl();
+        MessagesBundle messagesBundle = new MessagesBundle();
+        String errorMessage = null;
 
         if(email == null || "".equals("email")) {
-            errorMessage = "Email cannot be empty";
+            errorMessage = messagesBundle.getMessages().get("emptyEmail");
         }
         if(password == null || "".equals("password")) {
-            errorMessage = "Password cannot be empty";
+            errorMessage = messagesBundle.getMessages().get("emptyPassword");
         }
         if(errorMessage != null) {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.html");
             request.setAttribute("errorMessage", errorMessage);
-            /*PrintWriter out = response.getWriter();
-            out.println("<font color=red>" + errorMessage + "</font>");
-            */
             dispatcher.include(request,response);
 
         }
@@ -79,19 +77,15 @@ public class LoginServlet extends HttpServlet {
                 }
                 else {
                     RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.html");
-                    request.setAttribute("errorMessage", "Email or password invalid.");
-                    /*PrintWriter out = response.getWriter();
-                    out.println("<font color=red>Email or password invalid.</font>");
-                    */
+                    errorMessage = messagesBundle.getMessages().get("emailOrPasswordInvalid");
+                    request.setAttribute("errorMessage", errorMessage);
                     dispatcher.include(request, response);
                 }
             } catch (DAOException e) {
                 log.error("Database connection problem", e);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/login.html");
-                request.setAttribute("errorMessage", "No user found with given email and password, please register first.");
-                /*PrintWriter out = response.getWriter();
-                out.println("<font color=red>No user found with given email and password, please register first.</font>");
-                */
+                errorMessage = messagesBundle.getMessages().get("noUserFound");
+                request.setAttribute("errorMessage", errorMessage);
                 dispatcher.include(request, response);
             }
         }

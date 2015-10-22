@@ -41,7 +41,33 @@ public class MessagesBundle {
         messages.put("friendList", bundle.getString("friendList"));
         messages.put("addToFriend", bundle.getString("addToFriend"));
         messages.put("cancelFriendship", bundle.getString("cancelFriendship"));
+        messages.put("addCommentFailed", bundle.getString("addCommentFailed"));
+        messages.put("saveNewsFailed", bundle.getString("saveNewsFailed"));
+        messages.put("friendRequestSuccess", bundle.getString("friendRequestSuccess"));
+        messages.put("friendRequestFailed", bundle.getString("friendRequestFailed"));
+        messages.put("deleteCommentFailed", bundle.getString("deleteCommentFailed"));
+        messages.put("cancelFriendshipSuccess", bundle.getString("cancelFriendshipSuccess"));
+        messages.put("cancelFriendshipFailed", bundle.getString("cancelFriendshipFailed"));
+        messages.put("deleteNewsFailed", bundle.getString("deleteNewsFailed"));
+        messages.put("deleteUserFailed", bundle.getString("deleteUserFailed"));
+        messages.put("emptyName", bundle.getString("emptyName"));
+        messages.put("emptyEmail", bundle.getString("emptyEmail"));
+        messages.put("emptyPassword", bundle.getString("emptyPassword"));
+        messages.put("emailOrPasswordInvalid", bundle.getString("emailOrPasswordInvalid"));
+        messages.put("noUserFound", bundle.getString("noUserFound"));
+        messages.put("registrationFailed", bundle.getString("registrationFailed"));
+        messages.put("updateCommentFailed", bundle.getString("updateCommentFailed"));
+        messages.put("updateNewsFailed", bundle.getString("updateNewsFailed"));
+
 
         return messages;
+    }
+
+    public Map<String, String> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(Map<String, String> messages) {
+        this.messages = messages;
     }
 }

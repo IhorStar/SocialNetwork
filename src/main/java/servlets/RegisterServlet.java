@@ -4,6 +4,7 @@ import dao.DAOException;
 import dao.UserDAO;
 import dao.implementation.UserDAOImpl;
 import entity.User;
+import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 
@@ -29,23 +29,21 @@ public class RegisterServlet extends HttpServlet {
         String name = request.getParameter("name");
         String password = request.getParameter("password");
         String email = request.getParameter("email");
+        MessagesBundle messagesBundle = new MessagesBundle();
         String errorMessage = null;
 
         if(name == null || "".equals(name)) {
-            errorMessage = "Name cannot be empty.";
+            errorMessage = messagesBundle.getMessages().get("emptyName");
         }
         if(password == null || "".equals(password)) {
-            errorMessage = "Password cannot be empty.";
+            errorMessage = messagesBundle.getMessages().get("emptyPassword");
         }
         if(email == null || "".equals(email)) {
-            errorMessage = "Email cannot be empty.";
+            errorMessage = messagesBundle.getMessages().get("emptyEmail");
         }
         if(errorMessage != null) {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/register.html");
             request.setAttribute("errorMessage", errorMessage);
-            /*PrintWriter out = response.getWriter();
-            out.println("<font color=red>" + errorMessage + "</font>");
-            */
             dispatcher.include(request, response);
 
         }
@@ -69,10 +67,8 @@ public class RegisterServlet extends HttpServlet {
             } catch (DAOException e) {
                 log.error("Database connection problem", e);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/register.html");
-                request.setAttribute("errorMessage","Registration failed, please try again.");
-                /*PrintWriter out = response.getWriter();
-                out.println("<font color=red>Registration failed, please try again.</font>");
-                */
+                errorMessage = messagesBundle.getMessages().get("registrationFailed");
+                request.setAttribute("errorMessage", errorMessage);
                 dispatcher.include(request, response);
             }
         }

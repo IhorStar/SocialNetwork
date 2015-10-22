@@ -4,6 +4,7 @@ import dao.DAOException;
 import dao.UserDAO;
 import dao.implementation.UserDAOImpl;
 import entity.User;
+import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet("/deleteUser")
@@ -28,6 +28,8 @@ public class DeleteUserServlet extends HttpServlet {
         int userId = Integer.parseInt(request.getParameter("userId"));
         HttpSession session = request.getSession(true);
         User user = (User)session.getAttribute("user");
+        MessagesBundle messagesBundle = new MessagesBundle();
+        String errorMessage = messagesBundle.getMessages().get("deleteUserFailed");
 
         try {
             UserDAO userDAO = new UserDAOImpl();
@@ -45,8 +47,7 @@ public class DeleteUserServlet extends HttpServlet {
         catch (DAOException e) {
             e.printStackTrace();
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
-            PrintWriter out = response.getWriter();
-            out.println("<font color=red>Delete user failed, please try again.</font>");
+            request.setAttribute("errorMessage", errorMessage);
             dispatcher.include(request, response);
         }
     }
