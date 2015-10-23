@@ -1,12 +1,12 @@
 package servlets;
 
 import dao.DAOException;
-import dao.NewsDAO;
-import dao.implementation.NewsDAOImpl;
 import entity.User;
 import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import service.NewsService;
+import service.implementation.NewsServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,9 +32,9 @@ public class DeleteNewsServlet extends HttpServlet {
 
 
         try {
-            NewsDAO newsDAO = new NewsDAOImpl();
-            newsDAO.deleteNewsById(newsId);
-            List allNews = newsDAO.getAllNews(user.getUserId());
+            NewsService newsService = new NewsServiceImpl();
+            newsService.deleteNewsById(newsId);
+            List allNews = newsService.getAllNews(user.getUserId());
             session.setAttribute("allNews", allNews);
             response.sendRedirect("/home.jsp");
         }

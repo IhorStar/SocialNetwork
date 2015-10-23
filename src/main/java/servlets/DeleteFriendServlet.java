@@ -1,12 +1,12 @@
 package servlets;
 
 import dao.DAOException;
-import dao.RelationDAO;
-import dao.implementation.RelationDAOImpl;
 import entity.User;
 import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import service.RelationService;
+import service.implementation.RelationServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,9 +32,9 @@ public class DeleteFriendServlet extends HttpServlet {
         String errorMessage = messagesBundle.getMessages().get("cancelFriendshipFailed");
 
         try {
-            RelationDAO relationDAO = new RelationDAOImpl();
-            relationDAO.deleteRelationBy(user.getUserId(), user2Id);
-            List allRelation = relationDAO.getAllRelationBy(user.getUserId());
+            RelationService relationService = new RelationServiceImpl();
+            relationService.deleteRelationBy(user.getUserId(), user2Id);
+            List allRelation = relationService.getAllRelationBy(user.getUserId());
             session.setAttribute("allRelation", allRelation);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             request.setAttribute("successMessage", successMessage);

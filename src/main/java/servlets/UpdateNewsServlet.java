@@ -1,13 +1,13 @@
 package servlets;
 
 import dao.DAOException;
-import dao.NewsDAO;
-import dao.implementation.NewsDAOImpl;
 import entity.News;
 import entity.User;
 import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import service.NewsService;
+import service.implementation.NewsServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -35,9 +35,9 @@ public class UpdateNewsServlet extends HttpServlet {
         String errorMessage = messagesBundle.getMessages().get("updateNewsFailed");
 
         try {
-            NewsDAO newsDAO = new NewsDAOImpl();
-            newsDAO.updateNews(news);
-            List allNews = newsDAO.getAllNews(user.getUserId());
+            NewsService newsService = new NewsServiceImpl();
+            newsService.updateNews(news);
+            List allNews = newsService.getAllNews(user.getUserId());
             session.setAttribute("allNews", allNews);
             response.sendRedirect("/home.jsp");
         }

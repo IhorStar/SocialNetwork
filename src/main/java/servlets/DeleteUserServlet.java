@@ -1,12 +1,12 @@
 package servlets;
 
 import dao.DAOException;
-import dao.UserDAO;
-import dao.implementation.UserDAOImpl;
 import entity.User;
 import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import service.UserService;
+import service.implementation.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -32,9 +32,9 @@ public class DeleteUserServlet extends HttpServlet {
         String errorMessage = messagesBundle.getMessages().get("deleteUserFailed");
 
         try {
-            UserDAO userDAO = new UserDAOImpl();
-            userDAO.deleteUserById(userId);
-            List allUsers = userDAO.getAllUsers();
+            UserService userService = new UserServiceImpl();
+            userService.deleteUserById(userId);
+            List allUsers = userService.getAllUsers();
             session.setAttribute("allUsers", allUsers);
             if(user.getRoleId() == ADMIN) {
                 response.sendRedirect("/admin.jsp");

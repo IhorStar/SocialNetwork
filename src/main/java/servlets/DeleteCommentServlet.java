@@ -1,16 +1,16 @@
 package servlets;
 
-import dao.CommentDAO;
 import dao.DAOException;
-import dao.NewsDAO;
-import dao.implementation.CommentDAOImpl;
-import dao.implementation.NewsDAOImpl;
 import entity.Comment;
 import entity.News;
 import entity.User;
 import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import service.CommentService;
+import service.NewsService;
+import service.implementation.CommentServiceImpl;
+import service.implementation.NewsServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -36,11 +36,11 @@ public class DeleteCommentServlet extends HttpServlet {
 
 
         try {
-            NewsDAO newsDAO = new NewsDAOImpl();
-            CommentDAO commentDAO = new CommentDAOImpl();
-            commentDAO.deleteCommentById(comment);
-            List<News> allNews = newsDAO.getAllNews(user.getUserId());
-            List<List<Comment>> allComment = commentDAO.getAllBy(allNews);
+            NewsService newsService = new NewsServiceImpl();
+            CommentService commentService = new CommentServiceImpl();
+            commentService.deleteCommentById(comment);
+            List<News> allNews = newsService.getAllNews(user.getUserId());
+            List<List<Comment>> allComment = commentService.getAllBy(allNews);
             session.setAttribute("allComment", allComment);
             response.sendRedirect("/home.jsp");
         } catch (DAOException e) {

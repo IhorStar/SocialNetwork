@@ -1,10 +1,12 @@
-package dao;
+package service;
 
+
+import dao.DAOException;
 import entity.User;
 
 import java.util.List;
 
-public interface UserDAO {
+public interface UserService {
     void addUser(User user) throws DAOException;
     User getUserById(int userId) throws DAOException;
     User getUserBy(String email, String password) throws DAOException;

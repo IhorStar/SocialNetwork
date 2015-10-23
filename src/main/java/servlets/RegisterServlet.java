@@ -1,12 +1,12 @@
 package servlets;
 
 import dao.DAOException;
-import dao.UserDAO;
-import dao.implementation.UserDAOImpl;
 import entity.User;
 import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import service.UserService;
+import service.implementation.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -48,7 +48,7 @@ public class RegisterServlet extends HttpServlet {
 
         }
         else {
-            UserDAO userDAO = new UserDAOImpl();
+            UserService userService = new UserServiceImpl();
             User user = new User();
             user.setRoleId(2);
             user.setName(name);
@@ -56,10 +56,10 @@ public class RegisterServlet extends HttpServlet {
             user.setEmail(email);
 
             try {
-                userDAO.addUser(user);
+                userService.addUser(user);
                 log.info("User registered with email: " + email);
-                User regUser = userDAO.getUserBy(user.getEmail(), user.getPassword());
-                List allUsers = userDAO.getAllUsers();
+                User regUser = userService.getUserBy(user.getEmail(), user.getPassword());
+                List allUsers = userService.getAllUsers();
                 HttpSession session = request.getSession(true);
                 session.setAttribute("user", regUser);
                 session.setAttribute("allUsers", allUsers);

@@ -1,13 +1,12 @@
 package servlets;
 
-
 import dao.DAOException;
-import dao.RelationDAO;
-import dao.implementation.RelationDAOImpl;
 import entity.User;
 import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import service.RelationService;
+import service.implementation.RelationServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -33,8 +32,8 @@ public class AddToFriendServlet extends HttpServlet {
         String errorMessage = messagesBundle.getMessages().get("friendRequestFailed");
 
         try {
-            RelationDAO relationDAO = new RelationDAOImpl();
-            relationDAO.addRelation(user.getUserId(), user2Id,relationTypeId);
+            RelationService relationService = new RelationServiceImpl();
+            relationService.addRelation(user.getUserId(), user2Id,relationTypeId);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             request.setAttribute("successMessage", successMessage);
             dispatcher.include(request, response);
