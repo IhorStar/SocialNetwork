@@ -4,23 +4,56 @@ import dao.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class PostgresqlDAOFactory implements DAOFactory {
     private  static  final Logger log = LogManager.getLogger(PostgresqlDAOFactory.class);
 
-    private static final String DRIVER = "org.postgresql.Driver";
-    private static final String URL = "jdbc:postgresql://localhost:5432/social_network";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "root";
+    private String driver = null;
+    private String url = null;
+    private String user = null;
+    private String password = null;
 
     public Connection getConnection()  {
+
+        Properties properties = new Properties();
+        InputStream input = null;
+
+        try {
+            input = new FileInputStream("database.properties");
+            properties.load(input);
+            driver = properties.getProperty("databaseDriver");
+            url = properties.getProperty("databaseUrl");
+            user = properties.getProperty("databaseUser");
+            password = properties.getProperty("databasePassword");
+
+        } catch (FileNotFoundException e) {
+            log.error("File not found", e);
+        } catch (IOException e) {
+            log.error("Problem with input stream", e);
+        }
+        finally {
+            if(input != null) {
+                try {
+                    input.close();
+                } catch (IOException e) {
+                    log.error("Could not close file", e);
+                }
+            }
+        }
+
         Connection connection = null;
         try {
-            Class.forName(DRIVER);
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            Class.forName(driver);
+            connection = DriverManager.getConnection(url, user, password);
         } catch (ClassNotFoundException e) {
             log.error("Problem with connection", e);
         }
