@@ -1,84 +1,50 @@
-CREATE OR REPLACE FUNCTION insert_user(
-    user_id integer,
-    name character varying,
-    password character varying,
-    email character varying,
-    role_id integer)
-  RETURNS void AS
-$BODY$begin
-insert into "user" values(user_id, name, password, email, role_id);
-end$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-ALTER FUNCTION insert_user(integer, character varying, character varying, character varying, integer)
-  OWNER TO postgres;
+INSERT INTO "user"(user_id, name, password, email, role_id) VALUES (1, 'Ihor', 'qwerty', 'ihor@gmail.com', 2);
+INSERT INTO "user"(user_id, name, password, email, role_id) VALUES (2, 'Anton', 'qwerty', 'anton@gmail.com', 2);
+INSERT INTO "user"(user_id, name, password, email, role_id) VALUES (3, 'Alex', 'qwerty', 'alex@gmail.com', 2);
 
 
+INSERT INTO news(
+  news_id, description, date, "time", "user")
+VALUES (1, 'Java is a general-purpose computer programming language that is concurrent,
+  class-based, object-oriented, and specifically
+  designed to have as few implementation dependencies as possible.', '27/10/2015', '22:26', 1);
 
-CREATE OR REPLACE FUNCTION insert_news(
-    news_id integer,
-    description text,
-    date date,
-    "time" time with time zone,
-    "user" integer)
-  RETURNS void AS
-$BODY$begin
-insert into news values(news_id, description, date, time, user);
-end$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-ALTER FUNCTION insert_news(integer, text, date, time with time zone, integer)
-  OWNER TO postgres;
+INSERT INTO news(
+  news_id, description, date, "time", "user")
+VALUES (2, 'James Gosling, Mike Sheridan, and Patrick Naughton initiated the Java
+  language project in June 1991.', '27/10/2015', '22:28', 1);
 
+INSERT INTO news(
+  news_id, description, date, "time", "user")
+VALUES (3, 'Sun Microsystems released the first public implementation as Java 1.0 in 1995.', '27/10/2015', '22:30', 2);
 
 
+INSERT INTO comment(
+  comment_id, text, date, "time", news, "user")
+VALUES (1, 'This is the comment', '27/10/2015', '22:33', 1, 1);
+
+INSERT INTO comment(
+  comment_id, text, date, "time", news, "user")
+VALUES (2, 'This is the comment 2', '27/10/2015', '22:35', 1, 3);
+
+INSERT INTO comment(
+  comment_id, text, date, "time", news, "user")
+VALUES (3, 'This is the comment 3', '27/10/2015', '22:37', 1, 2);
 
 
-CREATE OR REPLACE FUNCTION insert_comment(
-    comment_id integer,
-    text text,
-    date date,
-    news integer,
-    "user" integer)
-  RETURNS void AS
-$BODY$begin
-insert into comment values(comment_id, text, date, time, news, user);
-end
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-ALTER FUNCTION insert_comment(integer, text, date, integer, integer)
-  OWNER TO postgres;
+INSERT INTO relation_type(
+  relation_type_id, name)
+VALUES (1, 'friend');
 
 
+INSERT INTO relation(
+  relation_id, user1, user2, relation_type)
+VALUES (1, 1, 2, 1);
 
-CREATE OR REPLACE FUNCTION insert_relation(
-    relation_id integer,
-    user1 integer,
-    user2 integer,
-    relation_type integer)
-  RETURNS void AS
-$BODY$begin
-insert into relation values(relation_id, user1, user2, relation_type);
-end
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-ALTER FUNCTION insert_relation(integer, integer, integer, integer)
-  OWNER TO postgres;
+INSERT INTO relation(
+  relation_id, user1, user2, relation_type)
+VALUES (2, 1, 3, 1);
 
-
-
-
-CREATE OR REPLACE FUNCTION insert_relation_type(
-    relation_type_id integer,
-    name character varying)
-  RETURNS void AS
-$BODY$begin
-insert into relation_type values(relation_type_id, name);
-end
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100;
-ALTER FUNCTION insert_relation_type(integer, character varying)
-  OWNER TO postgres;
+INSERT INTO relation(
+  relation_id, user1, user2, relation_type)
+VALUES (3, 2, 3, 1);
