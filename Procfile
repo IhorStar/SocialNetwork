@@ -1,1 +1,1 @@
-web: sh target/SocialNetwork.war
+web: SocialNetwork
