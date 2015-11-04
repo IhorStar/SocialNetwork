@@ -1,1 +1,1 @@
-web:   java -jar webapp-runner.jar --port $PORT SocialNetwork/target/*.war
+web:   java $JAVA_OPTS -jar SocialNetwork/target/dependency/webapp-runner.jar --port $PORT SocialNetwork/target/*.war
