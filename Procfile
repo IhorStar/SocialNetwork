@@ -1,1 +1,1 @@
-web:   java -jar webapp-runner.jar --port $PORT webServlets/target/*.war
+web:   java -jar webapp-runner.jar --port $PORT SocialNetwork/target/*.war
