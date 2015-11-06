@@ -3,8 +3,14 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>SocialNetwork</groupId>
   <artifactId>SocialNetwork</artifactId>
-  <packaging>war</packaging>
+  <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>service</module>
+    <module>dao</module>
+    <module>model</module>
+    <module>servlet</module>
+  </modules>
   <name>SocialNetwork Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
