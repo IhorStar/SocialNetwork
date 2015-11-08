@@ -40,7 +40,7 @@ public class DeleteNewsServlet extends HttpServlet {
         }
         catch (DAOException e) {
             log.error("Database connection problem", e);
-            RequestDispatcher dispatcher = request.getServletContext().getRequestDispatcher("/home.jsp");
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             request.setAttribute("errorMessage", errorMessage);
             dispatcher.include(request, response);
         }
