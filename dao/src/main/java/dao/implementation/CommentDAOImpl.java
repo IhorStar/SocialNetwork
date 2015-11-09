@@ -28,13 +28,14 @@ public class CommentDAOImpl implements CommentDAO {
         return  new Timestamp(date.getTime());
     }
 
-    public void addComment(Comment comment) throws DAOException {
+    public void addComment(Comment comment) throws DAOException, SQLException {
         String query = "insert into comment values (?, ?, ?, ?, ?, ?);";
         Connection connection = null;
         PreparedStatement statement = null;
 
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, comment.getCommentId());
             statement.setString(2, comment.getText());
@@ -43,8 +44,10 @@ public class CommentDAOImpl implements CommentDAO {
             statement.setInt(5, comment.getNewsId());
             statement.setInt(6, comment.getUserId());
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -60,7 +63,7 @@ public class CommentDAOImpl implements CommentDAO {
         }
     }
 
-    public Comment getCommentById(int commentId) throws DAOException {
+    public Comment getCommentById(int commentId) throws DAOException, SQLException {
         String query = "select * from comment where comment_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
@@ -68,6 +71,7 @@ public class CommentDAOImpl implements CommentDAO {
         Comment comment = new Comment();
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -78,9 +82,10 @@ public class CommentDAOImpl implements CommentDAO {
                 comment.setNewsId(resultSet.getInt("news"));
                 comment.setUserId(resultSet.getInt("user"));
             }
-
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -100,21 +105,23 @@ public class CommentDAOImpl implements CommentDAO {
         return comment;
     }
 
-    public void updateComment(Comment comment) throws  DAOException{
+    public void updateComment(Comment comment) throws DAOException, SQLException {
         String query = "update comment set  text = ?, date = ?, time = ? where comment_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, comment.getCommentId());
             statement.setString(2, comment.getText());
             statement.setString(3, comment.getDate());
             statement.setString(4, comment.getTime());
             statement.executeUpdate();
-
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -130,17 +137,20 @@ public class CommentDAOImpl implements CommentDAO {
         }
     }
 
-    public void deleteCommentById(int commentId) throws  DAOException{
+    public void deleteCommentById(int commentId) throws DAOException, SQLException {
         String query = "delete from comment where comment_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, commentId);
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
 
         }
         finally {
@@ -157,7 +167,7 @@ public class CommentDAOImpl implements CommentDAO {
         }
     }
 
-    public List<Comment> getAllBy(int newsId) throws DAOException {
+    public List<Comment> getAllBy(int newsId) throws DAOException, SQLException {
         String query = "select * from comment where news = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
@@ -165,6 +175,8 @@ public class CommentDAOImpl implements CommentDAO {
         List<Comment> commentList = null;
 
         try {
+            connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, newsId);
             resultSet = statement.executeQuery();
@@ -184,10 +196,11 @@ public class CommentDAOImpl implements CommentDAO {
                 comment.setDate(date);
                 comment.setTime(time);
                 commentList.add(comment);
-
             }
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -208,7 +221,7 @@ public class CommentDAOImpl implements CommentDAO {
         return commentList;
     }
 
-    public List<List<Comment>> getAllBy(List<News> allNews) throws DAOException {
+    public List<List<Comment>> getAllBy(List<News> allNews) throws DAOException, SQLException {
         List<List<Comment>> list = new ArrayList<List<Comment>>();
         for(News news : allNews) {
             List<Comment> commentList = getAllBy(news.getNewsId());

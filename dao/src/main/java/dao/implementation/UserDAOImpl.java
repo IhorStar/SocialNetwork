@@ -18,21 +18,24 @@ public class UserDAOImpl implements UserDAO {
     private static final Logger log = LogManager.getLogger(UserDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
 
-    public void addUser(User user) throws DAOException {
+    public void addUser(User user) throws DAOException, SQLException {
         String query = "insert into user(name, password, email, role_id) values (?, ?, ?, ?);";
         Connection connection = null;
         PreparedStatement statement = null;
 
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setString(1, user.getName());
             statement.setString(2, user.getPassword());
             statement.setString(3, user.getEmail());
             statement.setInt(4, user.getRoleId());
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -48,7 +51,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    public User getUserById(int id) throws DAOException{
+    public User getUserById(int id) throws DAOException, SQLException {
         String query = "select * from user where user_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
@@ -56,6 +59,7 @@ public class UserDAOImpl implements UserDAO {
         User user = new User();
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -64,9 +68,10 @@ public class UserDAOImpl implements UserDAO {
                 user.setPassword(resultSet.getString("password"));
                 user.setEmail(resultSet.getString("email"));
             }
-
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -86,7 +91,7 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public User getUserBy(String email, String password) throws DAOException {
+    public User getUserBy(String email, String password) throws DAOException, SQLException {
         String query = "select * from user where email = ? and password = ?";
         Connection connection = null;
         PreparedStatement statement = null;
@@ -94,6 +99,7 @@ public class UserDAOImpl implements UserDAO {
         User user = new User();
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -102,9 +108,11 @@ public class UserDAOImpl implements UserDAO {
                 user.setPassword(resultSet.getString("password"));
                 user.setEmail(resultSet.getString("email"));
             }
+            connection.commit();
         }
         catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -124,21 +132,23 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    public void updateUser(User user) throws DAOException {
+    public void updateUser(User user) throws DAOException, SQLException {
         String query = "update user set user_id = ?, name = ?, password = ?, email = ? where user_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, user.getUserId());
             statement.setString(2, user.getName());
             statement.setString(3, user.getPassword());
             statement.setString(4, user.getEmail());
             statement.executeUpdate();
-
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -154,17 +164,20 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    public void deleteUserById(int userId) throws DAOException {
+    public void deleteUserById(int userId) throws DAOException, SQLException {
         String query = "delete from user where user_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, userId);
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
 
         }
         finally {
@@ -181,7 +194,7 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    public List<User> getAllUsers() throws DAOException {
+    public List<User> getAllUsers() throws DAOException, SQLException {
         String query = "select id, name from user;";
         Connection connection = null;
         PreparedStatement statement = null;
@@ -189,6 +202,8 @@ public class UserDAOImpl implements UserDAO {
         List<User> userList = null;
 
         try {
+            connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             userList = new ArrayList<User>();
@@ -200,8 +215,10 @@ public class UserDAOImpl implements UserDAO {
                 user.setName(name);
                 userList.add(user);
             }
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {

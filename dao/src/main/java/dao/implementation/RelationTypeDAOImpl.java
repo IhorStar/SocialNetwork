@@ -17,19 +17,22 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
 
 
-    public void addRelationType(RelationType relationType) throws DAOException {
+    public void addRelationType(RelationType relationType) throws DAOException, SQLException {
         String query = "insert into relation_type  values (?, ?);";
         Connection connection = null;
         PreparedStatement statement = null;
 
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, relationType.getRelationTypeId());
             statement.setString(2, relationType.getRelationTypeName());
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -45,7 +48,7 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         }
     }
 
-    public RelationType getRelationTypeById(int relationTypeId) throws  DAOException {
+    public RelationType getRelationTypeById(int relationTypeId) throws DAOException, SQLException {
         String query = "select * from relation_type where relation_type_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
@@ -53,15 +56,17 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         RelationType relationType = new RelationType();
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 relationType.setRelationTypeId(resultSet.getInt("relation_type_id"));
                 relationType.setRelationTypeName(resultSet.getString("name"));
             }
-
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -81,19 +86,21 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         return relationType;
     }
 
-    public void updateRelationType(RelationType relationType) throws DAOException {
+    public void updateRelationType(RelationType relationType) throws DAOException, SQLException {
         String query = "update relation_type set name = ? where relation_type_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, relationType.getRelationTypeId());
             statement.setString(2, relationType.getRelationTypeName());
             statement.executeUpdate();
-
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -109,17 +116,20 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         }
     }
 
-    public void deleteRelationTypeById(int relationTypeId) throws DAOException {
+    public void deleteRelationTypeById(int relationTypeId) throws DAOException, SQLException {
         String query = "delete from relation_type where relation_type_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, relationTypeId);
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
 
         }
         finally {

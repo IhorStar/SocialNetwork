@@ -18,20 +18,23 @@ public class RelationDAOImpl implements RelationDAO {
     private  static final Logger log = LogManager.getLogger(RelationDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
 
-    public void addRelation(int user1Id, int user2Id, int relationTypeId) throws DAOException {
+    public void addRelation(int user1Id, int user2Id, int relationTypeId) throws DAOException, SQLException {
         String query = "insert into relation(user1, user2, relation_type) values (?, ?, ?);";
         Connection connection = null;
         PreparedStatement statement = null;
 
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, user1Id);
             statement.setInt(2, user2Id);
             statement.setInt(3, relationTypeId);
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -47,7 +50,7 @@ public class RelationDAOImpl implements RelationDAO {
         }
     }
 
-    public Relation getRelationById(int relationId) throws  DAOException {
+    public Relation getRelationById(int relationId) throws DAOException, SQLException {
         String query = "select * from relation where relation_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
@@ -55,6 +58,7 @@ public class RelationDAOImpl implements RelationDAO {
         Relation relation = new Relation();
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -63,9 +67,10 @@ public class RelationDAOImpl implements RelationDAO {
                 relation.setUser2Id(resultSet.getInt("user2"));
                 relation.setRelationTypeId(resultSet.getInt("relation_type"));
             }
-
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -85,21 +90,23 @@ public class RelationDAOImpl implements RelationDAO {
         return relation;
     }
 
-    public void updateRelation(Relation relation) throws  DAOException {
+    public void updateRelation(Relation relation) throws DAOException, SQLException {
         String query = "update relation set user1 = ?, user2 = ?, relation_type = ? where relation_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, relation.getRelationTypeId());
             statement.setInt(2, relation.getUser1Id());
             statement.setInt(3, relation.getUser2Id());
             statement.setInt(4, relation.getRelationTypeId());
             statement.executeUpdate();
-
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -115,18 +122,22 @@ public class RelationDAOImpl implements RelationDAO {
         }
     }
 
-    public void deleteRelationBy(int user1id, int user2Id) throws DAOException {
+    public void deleteRelationBy(int user1id, int user2Id) throws DAOException, SQLException {
         String query = "delete from relation where user1 = ? and user2 = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, user1id);
             statement.setInt(2, user2Id);
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
 
         }
         finally {
@@ -143,7 +154,7 @@ public class RelationDAOImpl implements RelationDAO {
         }
     }
 
-    public List<Relation> getAllRelationBy(int userId) throws DAOException {
+    public List<Relation> getAllRelationBy(int userId) throws DAOException, SQLException {
         String query = "select * from relation where user1 = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
@@ -151,6 +162,8 @@ public class RelationDAOImpl implements RelationDAO {
         List<Relation> relationList = null;
 
         try {
+            connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();
@@ -166,11 +179,12 @@ public class RelationDAOImpl implements RelationDAO {
                 relation.setUser2Id(user2Id);
                 relation.setRelationTypeId(relationTypeId);
                 relationList.add(relation);
-
             }
+            connection.commit();
         }
         catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {

@@ -2,12 +2,13 @@ package dao;
 
 import entity.News;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface NewsDAO {
-    void addNews(News news) throws DAOException;
-    News getNewsById(int newsId) throws DAOException;
-    void updateNews(News news) throws DAOException;
-    void deleteNewsById(int newsId) throws DAOException;
-    List<News> getAllNews(int userId) throws  DAOException;
+    void addNews(News news) throws DAOException, SQLException;
+    News getNewsById(int newsId) throws DAOException, SQLException;
+    void updateNews(News news) throws DAOException, SQLException;
+    void deleteNewsById(int newsId) throws DAOException, SQLException;
+    List<News> getAllNews(int userId) throws DAOException, SQLException;
 }

@@ -25,13 +25,14 @@ public class NewsDAOImpl implements NewsDAO {
         Date date = new Date();
         return  new Timestamp(date.getTime());
     }
-    public void addNews(News news) throws DAOException {
+    public void addNews(News news) throws DAOException, SQLException {
         String query = "insert into news values (?, ?, ?, ?, ?);";
         Connection connection = null;
         PreparedStatement statement = null;
 
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, news.getNewsId());
             statement.setString(2, news.getDescription());
@@ -39,8 +40,10 @@ public class NewsDAOImpl implements NewsDAO {
             statement.setTimestamp(4, getTime());
             statement.setInt(5, news.getUserId());
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -56,7 +59,7 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
-    public News getNewsById(int newsId) throws  DAOException {
+    public News getNewsById(int newsId) throws DAOException, SQLException {
         String query = "select * from news where news_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
@@ -64,6 +67,7 @@ public class NewsDAOImpl implements NewsDAO {
         News news = new News();
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -73,9 +77,10 @@ public class NewsDAOImpl implements NewsDAO {
                 news.setTime(resultSet.getString("time"));
                 news.setUserId(resultSet.getInt("user"));
             }
-
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -96,21 +101,23 @@ public class NewsDAOImpl implements NewsDAO {
         return news;
     }
 
-    public void updateNews(News news) throws DAOException{
+    public void updateNews(News news) throws DAOException, SQLException {
         String query = "update news set  description = ?, date = ?, time = ? where news_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, news.getNewsId());
             statement.setString(2, news.getDescription());
             statement.setString(3, news.getDate());
             statement.setString(4, news.getTime());
             statement.executeUpdate();
-
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
@@ -126,18 +133,20 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
-    public void deleteNewsById(int newsId) throws DAOException{
+    public void deleteNewsById(int newsId) throws DAOException, SQLException {
         String query = "delete from news where news_id = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, newsId);
             statement.executeUpdate();
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
-
+            connection.rollback();
         }
         finally {
             try {
@@ -153,7 +162,7 @@ public class NewsDAOImpl implements NewsDAO {
         }
     }
 
-    public List<News> getAllNews(int userId) throws DAOException {
+    public List<News> getAllNews(int userId) throws DAOException, SQLException {
         String query = "select * from news where user = ?;";
         Connection connection = null;
         PreparedStatement statement = null;
@@ -161,6 +170,8 @@ public class NewsDAOImpl implements NewsDAO {
         List<News> newsList = null;
 
         try {
+            connection = postgresqlDaoFactory.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();
@@ -179,8 +190,10 @@ public class NewsDAOImpl implements NewsDAO {
                 news.setTime(time);
                 newsList.add(news);
             }
+            connection.commit();
         } catch (SQLException e) {
             log.error("Cannot execute SQL", e);
+            connection.rollback();
         }
         finally {
             try {
