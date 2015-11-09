@@ -8,33 +8,34 @@ import entity.Comment;
 import entity.News;
 import service.CommentService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class CommentServiceImpl implements CommentService {
 
     CommentDAO dao = new CommentDAOImpl();
 
-    public void addComment(Comment comment) throws DAOException {
+    public void addComment(Comment comment) throws DAOException, SQLException {
         dao.addComment(comment);
     }
 
-    public Comment getCommentById(int commentId) throws DAOException {
+    public Comment getCommentById(int commentId) throws DAOException, SQLException {
         return dao.getCommentById(commentId);
     }
 
-    public void updateComment(Comment comment) throws DAOException {
+    public void updateComment(Comment comment) throws DAOException, SQLException {
         dao.updateComment(comment);
     }
 
-    public void deleteCommentById(int commentId) throws DAOException {
+    public void deleteCommentById(int commentId) throws DAOException, SQLException {
         dao.deleteCommentById(commentId);
     }
 
-    public List<Comment> getAllBy(int newsId) throws DAOException {
+    public List<Comment> getAllBy(int newsId) throws DAOException, SQLException {
         return dao.getAllBy(newsId);
     }
 
-    public List<List<Comment>> getAllBy(List<News> allNews) throws DAOException {
+    public List<List<Comment>> getAllBy(List<News> allNews) throws DAOException, SQLException {
         return dao.getAllBy(allNews);
     }
 }

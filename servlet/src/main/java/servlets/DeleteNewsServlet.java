@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/deleteNews")
@@ -25,7 +26,7 @@ public class DeleteNewsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int newsId = Integer.parseInt(request.getParameter("newsId"));
-        HttpSession session = request.getSession(true);
+        HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
         MessagesBundle messagesBundle = new MessagesBundle();
         String errorMessage = messagesBundle.getMessages().get("deleteNewsFailed");
@@ -43,6 +44,8 @@ public class DeleteNewsServlet extends HttpServlet {
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             request.setAttribute("errorMessage", errorMessage);
             dispatcher.include(request, response);
+        } catch (SQLException e) {
+            log.error("Cannot execute SQL", e);
         }
     }
 }
