@@ -25,7 +25,6 @@ public class RelationDAOImpl implements RelationDAO {
 
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, user1Id);
             statement.setInt(2, user2Id);
@@ -58,7 +57,6 @@ public class RelationDAOImpl implements RelationDAO {
         Relation relation = new Relation();
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -96,7 +94,6 @@ public class RelationDAOImpl implements RelationDAO {
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, relation.getRelationTypeId());
             statement.setInt(2, relation.getUser1Id());
@@ -128,8 +125,6 @@ public class RelationDAOImpl implements RelationDAO {
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, user1id);
             statement.setInt(2, user2Id);
@@ -163,7 +158,6 @@ public class RelationDAOImpl implements RelationDAO {
 
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();

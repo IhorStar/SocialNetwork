@@ -54,6 +54,7 @@ public class PostgresqlDAOFactory implements DAOFactory {
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, user, password);
+            connection.setAutoCommit(false);
         } catch (ClassNotFoundException e) {
             log.error("Problem with connection", e);
         }

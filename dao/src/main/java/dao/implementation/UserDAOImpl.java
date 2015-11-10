@@ -25,7 +25,6 @@ public class UserDAOImpl implements UserDAO {
 
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setString(1, user.getName());
             statement.setString(2, user.getPassword());
@@ -59,7 +58,6 @@ public class UserDAOImpl implements UserDAO {
         User user = new User();
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -99,7 +97,6 @@ public class UserDAOImpl implements UserDAO {
         User user = new User();
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -138,7 +135,6 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, user.getUserId());
             statement.setString(2, user.getName());
@@ -170,7 +166,6 @@ public class UserDAOImpl implements UserDAO {
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, userId);
             statement.executeUpdate();
@@ -203,7 +198,6 @@ public class UserDAOImpl implements UserDAO {
 
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             userList = new ArrayList<User>();

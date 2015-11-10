@@ -35,7 +35,6 @@ public class CommentDAOImpl implements CommentDAO {
 
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, comment.getCommentId());
             statement.setString(2, comment.getText());
@@ -71,7 +70,6 @@ public class CommentDAOImpl implements CommentDAO {
         Comment comment = new Comment();
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -111,7 +109,6 @@ public class CommentDAOImpl implements CommentDAO {
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, comment.getCommentId());
             statement.setString(2, comment.getText());
@@ -143,7 +140,6 @@ public class CommentDAOImpl implements CommentDAO {
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, commentId);
             statement.executeUpdate();
@@ -176,7 +172,6 @@ public class CommentDAOImpl implements CommentDAO {
 
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, newsId);
             resultSet = statement.executeQuery();

@@ -32,7 +32,6 @@ public class NewsDAOImpl implements NewsDAO {
 
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, news.getNewsId());
             statement.setString(2, news.getDescription());
@@ -67,7 +66,6 @@ public class NewsDAOImpl implements NewsDAO {
         News news = new News();
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -107,7 +105,6 @@ public class NewsDAOImpl implements NewsDAO {
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, news.getNewsId());
             statement.setString(2, news.getDescription());
@@ -139,7 +136,6 @@ public class NewsDAOImpl implements NewsDAO {
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, newsId);
             statement.executeUpdate();
@@ -171,7 +167,6 @@ public class NewsDAOImpl implements NewsDAO {
 
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();

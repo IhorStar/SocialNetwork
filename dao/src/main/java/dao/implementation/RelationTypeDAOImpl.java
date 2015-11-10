@@ -24,7 +24,6 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
 
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, relationType.getRelationTypeId());
             statement.setString(2, relationType.getRelationTypeName());
@@ -56,7 +55,6 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         RelationType relationType = new RelationType();
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -92,7 +90,6 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, relationType.getRelationTypeId());
             statement.setString(2, relationType.getRelationTypeName());
@@ -122,7 +119,6 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         PreparedStatement statement = null;
         try {
             connection = postgresqlDaoFactory.getConnection();
-            connection.setAutoCommit(false);
             statement = connection.prepareStatement(query);
             statement.setInt(1, relationTypeId);
             statement.executeUpdate();
