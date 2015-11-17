@@ -15,6 +15,10 @@ public class CommentServiceImpl implements CommentService {
 
     CommentDAO dao = new CommentDAOImpl();
 
+    public void setDao(CommentDAO dao) {
+        this.dao = dao;
+    }
+
     public void addComment(Comment comment) throws DAOException, SQLException {
         dao.addComment(comment);
     }

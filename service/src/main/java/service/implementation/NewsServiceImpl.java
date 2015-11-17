@@ -14,6 +14,10 @@ public class NewsServiceImpl implements NewsService {
 
     NewsDAO dao = new NewsDAOImpl();
 
+    public void setDao(NewsDAO dao) {
+        this.dao = dao;
+    }
+
     public void addNews(News news) throws DAOException, SQLException {
         dao.addNews(news);
     }

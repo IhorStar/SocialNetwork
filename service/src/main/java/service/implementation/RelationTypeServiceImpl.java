@@ -14,7 +14,9 @@ public class RelationTypeServiceImpl implements RelationTypeService {
 
     RelationTypeDAO dao = new RelationTypeDAOImpl();
 
-
+    public void setDao(RelationTypeDAO dao) {
+        this.dao = dao;
+    }
     public void addRelationType(RelationType relationType) throws DAOException, SQLException {
         dao.addRelationType(relationType);
     }

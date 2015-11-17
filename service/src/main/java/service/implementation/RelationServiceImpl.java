@@ -4,6 +4,7 @@ package service.implementation;
 import dao.DAOException;
 import dao.RelationDAO;
 import dao.implementation.RelationDAOImpl;
+import dao.implementation.RelationTypeDAOImpl;
 import entity.Relation;
 import service.RelationService;
 
@@ -13,6 +14,10 @@ import java.util.List;
 public class RelationServiceImpl implements RelationService {
 
     RelationDAO dao = new RelationDAOImpl();
+
+    public void setDao(RelationDAO dao) {
+        this.dao = dao;
+    }
 
     public void addRelation(int user1Id, int user2Id, int relationTypeId) throws DAOException, SQLException {
         dao.addRelation(user1Id, user2Id, relationTypeId);

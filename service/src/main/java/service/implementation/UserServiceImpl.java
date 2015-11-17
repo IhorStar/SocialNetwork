@@ -14,6 +14,10 @@ public class UserServiceImpl implements UserService {
 
     private UserDAO dao = new UserDAOImpl();
 
+    public void setDao(UserDAO dao) {
+        this.dao = dao;
+    }
+
     public void addUser(User user) throws DAOException, SQLException {
         dao.addUser(user);
     }
@@ -37,4 +41,5 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() throws DAOException, SQLException {
         return dao.getAllUsers();
     }
+
 }
