@@ -12,18 +12,22 @@ public class AuthentificationFilterTest {
     HttpServletRequest request;
     HttpServletResponse response;
     FilterChain filterChain;
-    AuthenticationFilter filter = new AuthenticationFilter();
+    AuthenticationFilter authenticationFilter;
 
     @Before
     public void setUp() {
         request = mock(HttpServletRequest.class);
         response = mock(HttpServletResponse.class);
         filterChain = mock(FilterChain.class);
+        authenticationFilter = new AuthenticationFilter();
     }
 
     @Test
     public void doFilterTest() throws Exception {
-        filter.doFilter(request, response, filterChain);
-        verify(response).sendRedirect("/login.html");
+        when(request.getSession(false)).thenReturn(null);
+        when(request.getRequestURI()).thenReturn("");
+        authenticationFilter.doFilter(request, response, filterChain);
+        verify(request).getSession(false);
+        verify(request).getRequestURI();
     }
 }
