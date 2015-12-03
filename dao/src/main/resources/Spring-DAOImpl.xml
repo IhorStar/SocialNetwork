@@ -1,0 +1,28 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <import resource="Spring-DataSource.xml"/>
+
+    <bean id="userDAOImpl" class="dao.implementation.UserDAOImpl">
+        <property name="dataSourse" ref="dataSource"/>
+    </bean>
+
+    <bean id="newsDAOImpl" class="dao.implementation.CommentDAOImpl">
+        <property name="dataSourse" ref="dataSource"/>
+    </bean>
+
+    <bean id="commentDAOImpl" class="dao.implementation.CommentDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="relationDAOImpl" class="dao.implementation.RelationDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <bean id="relationTypeDAOImpl" class="dao.implementation.RelationTypeDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+</beans>
