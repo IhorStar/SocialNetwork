@@ -6,6 +6,7 @@ import entity.Comment;
 import entity.News;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Repository;
 
 
 import java.sql.*;
@@ -13,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
+@Repository("commentDAOImpl")
 public class CommentDAOImpl implements CommentDAO {
     private static  final Logger log = LogManager.getLogger(CommentDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
