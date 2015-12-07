@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Repository("commentDAOImpl")
+@Repository("commentDAO")
 public class CommentDAOImpl implements CommentDAO {
     private static  final Logger log = LogManager.getLogger(CommentDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();

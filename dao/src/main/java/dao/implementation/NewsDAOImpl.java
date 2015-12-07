@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Repository("newsDAOImpl")
+@Repository("newsDAO")
 public class NewsDAOImpl implements NewsDAO {
     private static final Logger log = LogManager.getLogger(NewsDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();

@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Repository("relationTypeDAOImpl")
+@Repository("relationTypeDAO")
 public class RelationTypeDAOImpl implements RelationTypeDAO {
     private static final Logger log = LogManager.getLogger(RelationTypeDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();

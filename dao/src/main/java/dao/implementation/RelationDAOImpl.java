@@ -14,7 +14,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository("relationDAOImpl")
+@Repository("relationDAO")
 public class RelationDAOImpl implements RelationDAO {
     private  static final Logger log = LogManager.getLogger(RelationDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();

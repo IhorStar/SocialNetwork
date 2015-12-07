@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Repository("userDAOImpl")
+@Repository("userDAO")
 public class UserDAOImpl implements UserDAO {
     private static final Logger log = LogManager.getLogger(UserDAOImpl.class);
     private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
