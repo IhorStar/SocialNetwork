@@ -3,16 +3,16 @@ package service.implementation;
 
 import dao.DAOException;
 import dao.RelationTypeDAO;
-import dao.implementation.RelationTypeDAOImpl;
 import entity.RelationType;
+import org.springframework.stereotype.Service;
 import service.RelationTypeService;
 
 import java.sql.SQLException;
 
-
+@Service("relationTypeService")
 public class RelationTypeServiceImpl implements RelationTypeService {
 
-    RelationTypeDAO dao = new RelationTypeDAOImpl();
+    private RelationTypeDAO dao;
 
     public void setDao(RelationTypeDAO dao) {
         this.dao = dao;

@@ -1,19 +1,19 @@
 package service.implementation;
 
-
 import dao.CommentDAO;
 import dao.DAOException;
-import dao.implementation.CommentDAOImpl;
 import entity.Comment;
 import entity.News;
+import org.springframework.stereotype.Service;
 import service.CommentService;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@Service("commentService")
 public class CommentServiceImpl implements CommentService {
 
-    CommentDAO dao = new CommentDAOImpl();
+    private CommentDAO dao;
 
     public void setDao(CommentDAO dao) {
         this.dao = dao;

@@ -3,16 +3,17 @@ package service.implementation;
 
 import dao.DAOException;
 import dao.NewsDAO;
-import dao.implementation.NewsDAOImpl;
 import entity.News;
+import org.springframework.stereotype.Service;
 import service.NewsService;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@Service("newsService")
 public class NewsServiceImpl implements NewsService {
 
-    NewsDAO dao = new NewsDAOImpl();
+    private NewsDAO dao;
 
     public void setDao(NewsDAO dao) {
         this.dao = dao;

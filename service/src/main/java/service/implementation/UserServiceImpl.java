@@ -3,16 +3,17 @@ package service.implementation;
 
 import dao.DAOException;
 import dao.UserDAO;
-import dao.implementation.UserDAOImpl;
 import entity.User;
+import org.springframework.stereotype.Service;
 import service.UserService;
 
 import java.sql.SQLException;
 import java.util.List;
 
+@Service("userService")
 public class UserServiceImpl implements UserService {
 
-    private UserDAO dao = new UserDAOImpl();
+    private UserDAO dao;
 
     public void setDao(UserDAO dao) {
         this.dao = dao;
