@@ -5,6 +5,7 @@ import dao.RelationTypeDAO;
 import entity.RelationType;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -15,8 +16,11 @@ import java.sql.SQLException;
 @Repository("relationTypeDAO")
 public class RelationTypeDAOImpl implements RelationTypeDAO {
     private static final Logger log = LogManager.getLogger(RelationTypeDAOImpl.class);
-    private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
+    private DriverManagerDataSource dataSource;
 
+    public void setDataSource(DriverManagerDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public void addRelationType(RelationType relationType) throws DAOException, SQLException {
         String query = "insert into relation_type  values (?, ?);";
@@ -24,7 +28,7 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         PreparedStatement statement = null;
 
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, relationType.getRelationTypeId());
             statement.setString(2, relationType.getRelationTypeName());
@@ -55,7 +59,7 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         ResultSet resultSet = null;
         RelationType relationType = new RelationType();
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -90,7 +94,7 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, relationType.getRelationTypeId());
             statement.setString(2, relationType.getRelationTypeName());
@@ -119,7 +123,7 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, relationTypeId);
             statement.executeUpdate();

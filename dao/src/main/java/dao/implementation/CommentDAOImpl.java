@@ -6,6 +6,7 @@ import entity.Comment;
 import entity.News;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 
@@ -17,7 +18,11 @@ import java.util.List;
 @Repository("commentDAO")
 public class CommentDAOImpl implements CommentDAO {
     private static  final Logger log = LogManager.getLogger(CommentDAOImpl.class);
-    private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
+    private DriverManagerDataSource dataSource;
+
+    public void setDataSource(DriverManagerDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     private Timestamp getDate() {
         Date date = new Date();
@@ -35,7 +40,7 @@ public class CommentDAOImpl implements CommentDAO {
         PreparedStatement statement = null;
 
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, comment.getCommentId());
             statement.setString(2, comment.getText());
@@ -70,7 +75,7 @@ public class CommentDAOImpl implements CommentDAO {
         ResultSet resultSet = null;
         Comment comment = new Comment();
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -109,7 +114,7 @@ public class CommentDAOImpl implements CommentDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, comment.getCommentId());
             statement.setString(2, comment.getText());
@@ -140,7 +145,7 @@ public class CommentDAOImpl implements CommentDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, commentId);
             statement.executeUpdate();
@@ -172,7 +177,7 @@ public class CommentDAOImpl implements CommentDAO {
         List<Comment> commentList = null;
 
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, newsId);
             resultSet = statement.executeQuery();

@@ -5,6 +5,7 @@ import dao.RelationDAO;
 import entity.Relation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -17,7 +18,11 @@ import java.util.List;
 @Repository("relationDAO")
 public class RelationDAOImpl implements RelationDAO {
     private  static final Logger log = LogManager.getLogger(RelationDAOImpl.class);
-    private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
+    private DriverManagerDataSource dataSource;
+
+    public void setDataSource(DriverManagerDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     public void addRelation(int user1Id, int user2Id, int relationTypeId) throws DAOException, SQLException {
         String query = "insert into relation(user1, user2, relation_type) values (?, ?, ?);";
@@ -25,7 +30,7 @@ public class RelationDAOImpl implements RelationDAO {
         PreparedStatement statement = null;
 
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, user1Id);
             statement.setInt(2, user2Id);
@@ -57,7 +62,7 @@ public class RelationDAOImpl implements RelationDAO {
         ResultSet resultSet = null;
         Relation relation = new Relation();
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -94,7 +99,7 @@ public class RelationDAOImpl implements RelationDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, relation.getRelationTypeId());
             statement.setInt(2, relation.getUser1Id());
@@ -125,7 +130,7 @@ public class RelationDAOImpl implements RelationDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, user1id);
             statement.setInt(2, user2Id);
@@ -158,7 +163,7 @@ public class RelationDAOImpl implements RelationDAO {
         List<Relation> relationList = null;
 
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();

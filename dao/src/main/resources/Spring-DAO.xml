@@ -6,11 +6,11 @@
     <import resource="Spring-DataSource.xml"/>
 
     <bean id="userDAO" class="dao.implementation.UserDAOImpl">
-        <property name="dataSourse" ref="dataSource"/>
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <bean id="newsDAO" class="dao.implementation.CommentDAOImpl">
-        <property name="dataSourse" ref="dataSource"/>
+    <bean id="newsDAO" class="dao.implementation.NewsDAOImpl">
+        <property name="dataSource" ref="dataSource"/>
     </bean>
 
     <bean id="commentDAO" class="dao.implementation.CommentDAOImpl">

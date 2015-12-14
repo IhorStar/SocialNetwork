@@ -5,6 +5,7 @@ import dao.NewsDAO;
 import entity.News;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
 
@@ -16,7 +17,11 @@ import java.util.List;
 @Repository("newsDAO")
 public class NewsDAOImpl implements NewsDAO {
     private static final Logger log = LogManager.getLogger(NewsDAOImpl.class);
-    private PostgresqlDAOFactory postgresqlDaoFactory = new PostgresqlDAOFactory();
+    private DriverManagerDataSource dataSource;
+
+    public void setDataSource(DriverManagerDataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     private Timestamp getDate() {
         Date date = new Date();
@@ -33,7 +38,7 @@ public class NewsDAOImpl implements NewsDAO {
         PreparedStatement statement = null;
 
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, news.getNewsId());
             statement.setString(2, news.getDescription());
@@ -67,7 +72,7 @@ public class NewsDAOImpl implements NewsDAO {
         ResultSet resultSet = null;
         News news = new News();
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
@@ -106,7 +111,7 @@ public class NewsDAOImpl implements NewsDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, news.getNewsId());
             statement.setString(2, news.getDescription());
@@ -137,7 +142,7 @@ public class NewsDAOImpl implements NewsDAO {
         Connection connection = null;
         PreparedStatement statement = null;
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, newsId);
             statement.executeUpdate();
@@ -168,7 +173,7 @@ public class NewsDAOImpl implements NewsDAO {
         List<News> newsList = null;
 
         try {
-            connection = postgresqlDaoFactory.getConnection();
+            connection = dataSource.getConnection();
             statement = connection.prepareStatement(query);
             statement.setInt(1, userId);
             resultSet = statement.executeQuery();
