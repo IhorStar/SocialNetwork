@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <import resource="Spring-Service.xml"/>
+
+    <bean id="register" class="servlets.RegisterServlet">
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean id="login" class="servlets.LoginServlet">
+        <property name="userService" ref="userService"/>
+        <property name="newsService" ref="newsService"/>
+        <property name="commentService" ref="commentService"/>
+        <property name="relationService" ref="relationService"/>
+    </bean>
+
+    <bean id="addComment" class="servlets.AddCommentServlet">
+        <property name="newsService" ref="newsService"/>
+        <property name="commentService" ref="commentService"/>
+    </bean>
+
+    <bean id="addNews" class="servlets.AddNewsServlet">
+        <property name="newsService" ref="newsService"/>
+    </bean>
+
+    <bean id="addToFriend" class="servlets.AddToFriendServlet">
+        <property name="relationService" ref="relationService"/>
+    </bean>
+
+    <bean id="deleteComment" class="servlets.DeleteCommentServlet">
+        <property name="newsService" ref="newsService"/>
+        <property name="commentService" ref="commentService"/>
+    </bean>
+
+    <bean id="deleteFriend" class="servlets.DeleteFriendServlet">
+        <property name="relationService" ref="relationService"/>
+    </bean>
+
+    <bean id="deleteNews" class="servlets.DeleteNewsServlet">
+        <property name="newsService" ref="newsService"/>
+    </bean>
+
+    <bean id="deleteUser" class="servlets.DeleteUserServlet">
+        <property name="userService" ref="userService"/>
+    </bean>
+
+    <bean id="updateComment" class="servlets.UpdateCommentServlet">
+        <property name="newsService" ref="newsService"/>
+        <property name="commentService" ref="commentService"/>
+    </bean>
+
+    <bean id="updateNews" class="servlets.UpdateNewsServlet">
+        <property name="newsService" ref="newsService"/>
+    </bean>
+</beans>

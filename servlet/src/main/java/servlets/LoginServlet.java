@@ -8,7 +8,8 @@ import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.*;
-import service.implementation.*;
+import service.implementation.AuthorizationServiceImpl;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,6 +25,26 @@ import java.util.List;
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
     private static final Logger log = LogManager.getLogger(LoginServlet.class);
+    private UserService userService;
+    private NewsService newsService;
+    private CommentService commentService;
+    private RelationService relationService;
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    public void setNewsService(NewsService newsService) {
+        this.newsService = newsService;
+    }
+
+    public void setCommentService(CommentService commentService) {
+        this.commentService = commentService;
+    }
+
+    public void setRelationService(RelationService relationService) {
+        this.relationService = relationService;
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -47,13 +68,9 @@ public class LoginServlet extends HttpServlet {
         }
         else {
             try {
-                UserService userService = new UserServiceImpl();
                 User user = userService.getUserBy(email, password);
                 if(user.getEmail() != null && user.getPassword() != null ) {
                     if(authorizationService.isUser(user)) {
-                        NewsService newsService = new NewsServiceImpl();
-                        CommentService commentService = new CommentServiceImpl();
-                        RelationService relationService = new RelationServiceImpl();
                         List<News> allNews = newsService.getAllNews(user.getUserId());
                         List<List<Comment>> allComment = commentService.getAllBy(allNews);
                         List allRelation = relationService.getAllRelationBy(user.getUserId());

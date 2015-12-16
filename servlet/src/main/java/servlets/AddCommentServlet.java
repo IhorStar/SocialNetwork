@@ -9,8 +9,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.CommentService;
 import service.NewsService;
-import service.implementation.CommentServiceImpl;
-import service.implementation.NewsServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -26,6 +24,16 @@ import java.util.List;
 @WebServlet("/addComment")
 public class AddCommentServlet extends HttpServlet {
     private static final Logger log = LogManager.getLogger(AddCommentServlet.class);
+    private NewsService newsService;
+    private CommentService commentService;
+
+    public void setNewsService(NewsService newsService) {
+        this.newsService = newsService;
+    }
+
+    public void setCommentService(CommentService commentService) {
+        this.commentService = commentService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,8 +47,6 @@ public class AddCommentServlet extends HttpServlet {
         String errorMessage = messagesBundle.getMessages().get("addCommentFailed");
 
         try {
-            NewsService newsService = new NewsServiceImpl();
-            CommentService commentService = new CommentServiceImpl();
             commentService.addComment(comment);
             List<News> allNews = newsService.getAllNews(user.getUserId());
             List<List<Comment>> allComments = commentService.getAllBy(allNews);

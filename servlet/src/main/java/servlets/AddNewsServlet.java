@@ -7,7 +7,6 @@ import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.NewsService;
-import service.implementation.NewsServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,6 +22,12 @@ import java.util.List;
 @WebServlet("/addNews")
 public class AddNewsServlet extends HttpServlet {
     private static final Logger log = LogManager.getLogger(AddNewsServlet.class);
+    private NewsService newsService;
+
+    public void setNewsService(NewsService newsService) {
+        this.newsService = newsService;
+    }
+
     @Override
     protected void  doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
@@ -34,7 +39,6 @@ public class AddNewsServlet extends HttpServlet {
         String errorMessage = messagesBundle.getMessages().get("saveNewsFailed");
 
         try {
-            NewsService newsService = new NewsServiceImpl();
             newsService.addNews(news);
             List allNews = newsService.getAllNews(user.getUserId());
             session.setAttribute("allNews", allNews);

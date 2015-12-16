@@ -6,7 +6,7 @@ import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.UserService;
-import service.implementation.UserServiceImpl;
+
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,7 +23,11 @@ import java.util.List;
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
     private static final Logger log = LogManager.getLogger(RegisterServlet.class);
+    private UserService userService;
 
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -49,7 +53,6 @@ public class RegisterServlet extends HttpServlet {
 
         }
         else {
-            UserService userService = new UserServiceImpl();
             User user = new User();
             user.setRoleId(2);
             user.setName(name);

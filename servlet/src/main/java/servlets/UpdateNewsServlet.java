@@ -7,7 +7,6 @@ import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.NewsService;
-import service.implementation.NewsServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,6 +22,11 @@ import java.util.List;
 @WebServlet("/updateNews")
 public class UpdateNewsServlet extends HttpServlet {
     private static final Logger log = LogManager.getLogger(UpdateNewsServlet.class);
+    private NewsService newsService;
+
+    public void setNewsService(NewsService newsService) {
+        this.newsService = newsService;
+    }
 
     @Override
     protected  void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -36,7 +40,6 @@ public class UpdateNewsServlet extends HttpServlet {
         String errorMessage = messagesBundle.getMessages().get("updateNewsFailed");
 
         try {
-            NewsService newsService = new NewsServiceImpl();
             newsService.updateNews(news);
             List allNews = newsService.getAllNews(user.getUserId());
             session.setAttribute("allNews", allNews);

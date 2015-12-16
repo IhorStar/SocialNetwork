@@ -6,7 +6,6 @@ import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.RelationService;
-import service.implementation.RelationServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -21,6 +20,11 @@ import java.sql.SQLException;
 @WebServlet("/addToFriend")
 public class AddToFriendServlet extends HttpServlet {
     private static final Logger log = LogManager.getLogger(AddToFriendServlet.class);
+    private RelationService relationService;
+
+    public void setRelationService(RelationService relationService) {
+        this.relationService = relationService;
+    }
 
     @Override
     protected  void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,7 +37,6 @@ public class AddToFriendServlet extends HttpServlet {
         String errorMessage = messagesBundle.getMessages().get("friendRequestFailed");
 
         try {
-            RelationService relationService = new RelationServiceImpl();
             relationService.addRelation(user.getUserId(), user2Id,relationTypeId);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             request.setAttribute("successMessage", successMessage);

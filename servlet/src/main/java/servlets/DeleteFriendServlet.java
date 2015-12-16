@@ -6,7 +6,6 @@ import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.RelationService;
-import service.implementation.RelationServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +21,11 @@ import java.util.List;
 @WebServlet("/deleteFriend")
 public class DeleteFriendServlet extends HttpServlet {
     private static final Logger log = LogManager.getLogger(DeleteFriendServlet.class);
+    private RelationService relationService;
+
+    public void setRelationService(RelationService relationService) {
+        this.relationService = relationService;
+    }
 
     @Override
     protected  void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,7 +37,6 @@ public class DeleteFriendServlet extends HttpServlet {
         String errorMessage = messagesBundle.getMessages().get("cancelFriendshipFailed");
 
         try {
-            RelationService relationService = new RelationServiceImpl();
             relationService.deleteRelationBy(user.getUserId(), user2Id);
             List allRelation = relationService.getAllRelationBy(user.getUserId());
             session.setAttribute("allRelation", allRelation);

@@ -6,7 +6,6 @@ import internationalization.MessagesBundle;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.UserService;
-import service.implementation.UserServiceImpl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,6 +21,11 @@ import java.util.List;
 @WebServlet("/deleteUser")
 public class DeleteUserServlet extends HttpServlet {
     private static final Logger log = LogManager.getLogger(DeleteUserServlet.class);
+    private UserService userService;
+
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -33,7 +37,6 @@ public class DeleteUserServlet extends HttpServlet {
         String errorMessage = messagesBundle.getMessages().get("deleteUserFailed");
 
         try {
-            UserService userService = new UserServiceImpl();
             userService.deleteUserById(userId);
             List allUsers = userService.getAllUsers();
             session.setAttribute("allUsers", allUsers);
