@@ -16,13 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 
 @WebServlet("/register")
 public class RegisterServlet extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(RegisterServlet.class);
+    private static final Logger LOGGER = LogManager.getLogger(RegisterServlet.class);
     private UserService userService;
 
     public void setUserService(UserService userService) {
@@ -54,14 +53,14 @@ public class RegisterServlet extends HttpServlet {
         }
         else {
             User user = new User();
-            user.setRoleId(2);
+            user.setRoleId();
             user.setName(name);
             user.setPassword(password);
             user.setEmail(email);
 
             try {
                 userService.addUser(user);
-                log.info("User registered with email: " + email);
+                LOGGER.info("User registered with email: " + email);
                 User regUser = userService.getUserBy(user.getEmail(), user.getPassword());
                 List allUsers = userService.getAllUsers();
                 HttpSession session = request.getSession(true);
@@ -69,15 +68,12 @@ public class RegisterServlet extends HttpServlet {
                 session.setAttribute("allUsers", allUsers);
                 response.sendRedirect("/home.jsp");
             } catch (DAOException e) {
-                log.error("Database connection problem", e);
+                LOGGER.error("Database connection problem", e);
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/register.html");
                 errorMessage = messagesBundle.getMessages().get("registrationFailed");
                 request.setAttribute("errorMessage", errorMessage);
                 dispatcher.include(request, response);
-            } catch (SQLException e) {
-                log.error("Cannot execute SQL", e);
             }
         }
-
     }
 }

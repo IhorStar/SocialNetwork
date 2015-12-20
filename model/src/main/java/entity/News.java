@@ -10,15 +10,6 @@ public class News {
     public News() {
 
     }
-
-    public News(int newsId, String description, String date, String time, int userId) {
-        this.newsId = newsId;
-        this.description = description;
-        this.date = date;
-        this.time = time;
-        this.userId = userId;
-    }
-
     public int getNewsId() {
         return newsId;
     }

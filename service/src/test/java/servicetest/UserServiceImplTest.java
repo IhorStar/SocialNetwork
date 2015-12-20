@@ -1,3 +1,5 @@
+package servicetest;
+
 import dao.DAOException;
 import dao.implementation.UserDAOImpl;
 import entity.User;
@@ -7,7 +9,6 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 import service.implementation.UserServiceImpl;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class UserServiceImplTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws DAOException {
         userDAO = mock(UserDAOImpl.class);
 
         userService = new UserServiceImpl();
@@ -46,13 +47,13 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testAddUser() throws Exception {
+    public void testAddUser() throws DAOException {
         userService.addUser(user1);
         verify(userDAO).addUser(user1);
     }
 
     @Test
-    public void testGetUserById() throws Exception {
+    public void testGetUserById() throws DAOException {
         when(userDAO.getUserById(1)).thenReturn(user1);
         User user = userService.getUserById(1);
         verify(userDAO).getUserById(1);
@@ -60,7 +61,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGetUserById2() throws Exception {
+    public void testGetUserById2() throws DAOException {
         doThrow(new DAOException("cannot find user with id = 0")).when(userDAO).getUserById(0);
         exception.expect(DAOException.class);
         exception.expectMessage("cannot find user with id = 0");
@@ -68,7 +69,7 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testGetUserBy() throws Exception {
+    public void testGetUserBy() throws DAOException {
         when(userDAO.getUserBy("user1@gmail.com", "qwerty")).thenReturn(user1);
         User user = userService.getUserBy("user1@gmail.com", "qwerty");
         verify(userDAO).getUserBy("user1@gmail.com", "qwerty");
@@ -76,19 +77,19 @@ public class UserServiceImplTest {
     }
 
     @Test
-    public void testUpdateUser() throws Exception {
+    public void testUpdateUser() throws DAOException {
         userService.updateUser(user1);
         verify(userDAO).updateUser(user1);
     }
 
     @Test
-    public void testDeleteUserById() throws Exception {
+    public void testDeleteUserById() throws DAOException {
         userService.deleteUserById(1);
         verify(userDAO).deleteUserById(1);
     }
 
     @Test
-    public void testGetAllUsers() throws Exception {
+    public void testGetAllUsers() throws DAOException {
         List<User> allUsers = new ArrayList<User>();
         int counter = 0;
         allUsers.add(user1);

@@ -8,15 +8,16 @@ public class User {
     private String password;
     private String email;
 
-    public User() {
-
-    }
     public User(int userId, int roleId, String name, String password, String email) {
         this.userId = userId;
         this.roleId = roleId;
         this.name = name;
         this.password = password;
         this.email = email;
+    }
+
+    public User() {
+
     }
 
     public int getUserId() {

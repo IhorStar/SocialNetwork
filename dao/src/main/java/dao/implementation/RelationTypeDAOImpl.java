@@ -2,148 +2,43 @@ package dao.implementation;
 
 import dao.DAOException;
 import dao.RelationTypeDAO;
+import dao.mapper.RelationTypeMapper;
 import entity.RelationType;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-@Repository("relationTypeDAO")
+@Repository
 public class RelationTypeDAOImpl implements RelationTypeDAO {
-    private static final Logger log = LogManager.getLogger(RelationTypeDAOImpl.class);
     private DriverManagerDataSource dataSource;
+    private JdbcTemplate jdbcTemplate;
 
     public void setDataSource(DriverManagerDataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public void addRelationType(RelationType relationType) throws DAOException, SQLException {
+    public void addRelationType(RelationType relationType) throws DAOException {
         String query = "insert into relation_type  values (?, ?);";
-        Connection connection = null;
-        PreparedStatement statement = null;
-
-        try {
-            connection = dataSource.getConnection();
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, relationType.getRelationTypeId());
-            statement.setString(2, relationType.getRelationTypeName());
-            statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            log.error("Cannot execute SQL", e);
-            connection.rollback();
-        }
-        finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(query, new Object[]{relationType.getRelationTypeId(), relationType.getRelationTypeName()});
     }
 
-    public RelationType getRelationTypeById(int relationTypeId) throws DAOException, SQLException {
+    public RelationType getRelationTypeById(int relationTypeId) throws DAOException {
         String query = "select * from relation_type where relation_type_id = ?;";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        ResultSet resultSet = null;
-        RelationType relationType = new RelationType();
-        try {
-            connection = dataSource.getConnection();
-            statement = connection.prepareStatement(query);
-            resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                relationType.setRelationTypeId(resultSet.getInt("relation_type_id"));
-                relationType.setRelationTypeName(resultSet.getString("name"));
-            }
-            connection.commit();
-        } catch (SQLException e) {
-            log.error("Cannot execute SQL", e);
-            connection.rollback();
-        }
-        finally {
-            try {
-                if (resultSet != null) {
-                    resultSet.close();
-                }
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        RelationType relationType = (RelationType) jdbcTemplate.queryForObject(query, new Object[]{relationTypeId}, new RelationTypeMapper());
         return relationType;
     }
 
-    public void updateRelationType(RelationType relationType) throws DAOException, SQLException {
+    public void updateRelationType(RelationType relationType) throws DAOException {
         String query = "update relation_type set name = ? where relation_type_id = ?;";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = dataSource.getConnection();
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, relationType.getRelationTypeId());
-            statement.setString(2, relationType.getRelationTypeName());
-            statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            log.error("Cannot execute SQL", e);
-            connection.rollback();
-        }
-        finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(query,new Object[]{relationType.getRelationTypeId(), relationType.getRelationTypeName()});
     }
 
-    public void deleteRelationTypeById(int relationTypeId) throws DAOException, SQLException {
+    public void deleteRelationTypeById(int relationTypeId) throws DAOException {
         String query = "delete from relation_type where relation_type_id = ?;";
-        Connection connection = null;
-        PreparedStatement statement = null;
-        try {
-            connection = dataSource.getConnection();
-            statement = connection.prepareStatement(query);
-            statement.setInt(1, relationTypeId);
-            statement.executeUpdate();
-            connection.commit();
-        } catch (SQLException e) {
-            log.error("Cannot execute SQL", e);
-            connection.rollback();
-
-        }
-        finally {
-            try {
-                if (statement != null) {
-                    statement.close();
-                }
-                if (connection != null) {
-                    connection.close();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        jdbcTemplate.update(query, new Object[]{relationTypeId});
     }
 }

@@ -15,12 +15,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/deleteFriend")
 public class DeleteFriendServlet extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(DeleteFriendServlet.class);
+    private static final Logger LOGGER = LogManager.getLogger(DeleteFriendServlet.class);
     private RelationService relationService;
 
     public void setRelationService(RelationService relationService) {
@@ -44,12 +43,10 @@ public class DeleteFriendServlet extends HttpServlet {
             request.setAttribute("successMessage", successMessage);
             dispatcher.include(request, response);
         } catch (DAOException e) {
-            log.error("Database connection problem", e);
+            LOGGER.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             request.setAttribute("errorMessage", errorMessage);
             dispatcher.include(request, response);
-        } catch (SQLException e) {
-            log.error("Cannot execute SQL", e);
         }
     }
 }

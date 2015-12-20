@@ -1,15 +1,12 @@
 package service.implementation;
 
-
 import dao.DAOException;
 import dao.RelationTypeDAO;
 import entity.RelationType;
 import org.springframework.stereotype.Service;
 import service.RelationTypeService;
 
-import java.sql.SQLException;
-
-@Service("relationTypeService")
+@Service
 public class RelationTypeServiceImpl implements RelationTypeService {
 
     private RelationTypeDAO dao;
@@ -17,19 +14,19 @@ public class RelationTypeServiceImpl implements RelationTypeService {
     public void setDao(RelationTypeDAO dao) {
         this.dao = dao;
     }
-    public void addRelationType(RelationType relationType) throws DAOException, SQLException {
+    public void addRelationType(RelationType relationType) throws DAOException {
         dao.addRelationType(relationType);
     }
 
-    public RelationType getRelationTypeById(int relationTypeId) throws DAOException, SQLException {
+    public RelationType getRelationTypeById(int relationTypeId) throws DAOException {
         return dao.getRelationTypeById(relationTypeId);
     }
 
-    public void updateRelationType(RelationType relationType) throws DAOException, SQLException {
+    public void updateRelationType(RelationType relationType) throws DAOException {
         dao.updateRelationType(relationType);
     }
 
-    public void deleteRelationTypeById(int relationTypeId) throws DAOException, SQLException {
+    public void deleteRelationTypeById(int relationTypeId) throws DAOException {
         dao.deleteRelationTypeById(relationTypeId);
     }
 }

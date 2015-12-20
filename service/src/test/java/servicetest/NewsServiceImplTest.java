@@ -1,3 +1,5 @@
+package servicetest;
+
 import dao.DAOException;
 import dao.implementation.NewsDAOImpl;
 import entity.News;
@@ -24,7 +26,7 @@ public class NewsServiceImplTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws DAOException {
         newsDAO = mock(NewsDAOImpl.class);
 
         newsService = new NewsServiceImpl();
@@ -44,13 +46,13 @@ public class NewsServiceImplTest {
     }
 
     @Test
-    public void testAddNews() throws Exception {
+    public void testAddNews() throws DAOException {
         newsService.addNews(news1);
         verify(newsDAO).addNews(news1);
     }
 
     @Test
-    public void testGetNewsById() throws Exception {
+    public void testGetNewsById() throws DAOException {
         when(newsDAO.getNewsById(1)).thenReturn(news1);
         News news = newsService.getNewsById(1);
         verify(newsDAO).getNewsById(1);
@@ -58,7 +60,7 @@ public class NewsServiceImplTest {
     }
 
     @Test
-    public void testGetNewsById2() throws Exception {
+    public void testGetNewsById2() throws DAOException {
         doThrow(new DAOException("cannot find news with id = 0")).when(newsDAO).getNewsById(0);
         exception.expect(DAOException.class);
         exception.expectMessage("cannot find news with id = 0");
@@ -66,19 +68,19 @@ public class NewsServiceImplTest {
     }
 
     @Test
-    public void testUpdateNews() throws Exception {
+    public void testUpdateNews() throws DAOException {
         newsService.updateNews(news1);
         verify(newsDAO).updateNews(news1);
     }
 
     @Test
-    public void testDeleteNewsById() throws Exception {
+    public void testDeleteNewsById() throws DAOException {
         newsService.deleteNewsById(1);
         verify(newsDAO).deleteNewsById(1);
     }
 
     @Test
-    public void testGetAllNews() throws Exception {
+    public void testGetAllNews() throws DAOException {
         List<News> allNews = new ArrayList<News>();
         int counter = 0;
 

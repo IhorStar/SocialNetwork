@@ -1,3 +1,5 @@
+package servicetest;
+
 import entity.User;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +22,7 @@ public class AuthorizationTest {
     @Before
     public void setUp() {
         authorizationService = new AuthorizationServiceImpl();
-        user.setRoleId(idRole);
+        user.setRoleId(1);
     }
 
     public AuthorizationTest(int idRole, boolean expected) {

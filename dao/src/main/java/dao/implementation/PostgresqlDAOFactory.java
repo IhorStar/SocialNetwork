@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class PostgresqlDAOFactory implements DAOFactory {
-    private  static  final Logger log = LogManager.getLogger(PostgresqlDAOFactory.class);
+    private  static  final Logger LOGGER = LogManager.getLogger(PostgresqlDAOFactory.class);
 
     private String driver = null;
     private String url = null;
@@ -36,16 +36,16 @@ public class PostgresqlDAOFactory implements DAOFactory {
             password = properties.getProperty("databasePassword");
 
         } catch (FileNotFoundException e) {
-            log.error("File not found", e);
+            LOGGER.error("File not found", e);
         } catch (IOException e) {
-            log.error("Problem with input stream", e);
+            LOGGER.error("Problem with input stream", e);
         }
         finally {
             if(input != null) {
                 try {
                     input.close();
                 } catch (IOException e) {
-                    log.error("Could not close file", e);
+                    LOGGER.error("Could not close file", e);
                 }
             }
         }
@@ -56,10 +56,10 @@ public class PostgresqlDAOFactory implements DAOFactory {
             connection = DriverManager.getConnection(url, user, password);
             connection.setAutoCommit(false);
         } catch (ClassNotFoundException e) {
-            log.error("Problem with connection", e);
+            LOGGER.error("Problem with connection", e);
         }
         catch (SQLException e) {
-            log.error("Problem with connection", e);
+            LOGGER.error("Problem with connection", e);
         }
 
         return connection;

@@ -1,3 +1,5 @@
+package servicetest;
+
 import dao.DAOException;
 import dao.implementation.CommentDAOImpl;
 import entity.Comment;
@@ -24,7 +26,7 @@ public class CommentServiceImplTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws DAOException {
         commentDAO = mock(CommentDAOImpl.class);
 
         commentService = new CommentServiceImpl();
@@ -46,13 +48,13 @@ public class CommentServiceImplTest {
     }
 
     @Test
-    public void testAddComment() throws Exception {
+    public void testAddComment() throws DAOException {
         commentService.addComment(comment1);
         verify(commentDAO).addComment(comment1);
     }
 
     @Test
-    public void testGetCommentById() throws Exception {
+    public void testGetCommentById() throws DAOException {
         when(commentDAO.getCommentById(1)).thenReturn(comment1);
         Comment comment = commentService.getCommentById(1);
         verify(commentDAO).getCommentById(1);
@@ -60,7 +62,7 @@ public class CommentServiceImplTest {
     }
 
     @Test
-    public void testGetCommentById2() throws Exception {
+    public void testGetCommentById2() throws DAOException {
         doThrow(new DAOException("cannot find comment with id = 0")).when(commentDAO).getCommentById(0);
         exception.expect(DAOException.class);
         exception.expectMessage("cannot find comment with id = 0");
@@ -68,19 +70,19 @@ public class CommentServiceImplTest {
     }
 
     @Test
-    public void testUpdateComment() throws Exception {
+    public void testUpdateComment() throws DAOException {
         commentService.updateComment(comment1);
         verify(commentDAO).updateComment(comment1);
     }
 
     @Test
-    public void testDeleteCommentById() throws Exception {
+    public void testDeleteCommentById() throws DAOException {
         commentService.deleteCommentById(1);
         verify(commentDAO).deleteCommentById(1);
     }
 
     @Test
-    public void testGetAllCommentById() throws Exception {
+    public void testGetAllCommentById() throws DAOException {
         List<Comment> allComment = new ArrayList<Comment>();
         int counter = 0;
         allComment.add(comment1);

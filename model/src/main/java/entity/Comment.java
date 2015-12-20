@@ -9,19 +9,9 @@ public class Comment {
     private int newsId;
     private int userId;
 
-    public Comment(int commentId, String text, String date, String time, int newsId, int userId) {
-        this.commentId = commentId;
-        this.text = text;
-        this.date = date;
-        this.time = time;
-        this.newsId = newsId;
-        this.userId = userId;
-    }
-
     public Comment() {
 
     }
-
 
     public int getCommentId() {
         return commentId;

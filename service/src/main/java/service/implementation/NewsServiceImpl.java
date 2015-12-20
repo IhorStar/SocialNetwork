@@ -7,10 +7,9 @@ import entity.News;
 import org.springframework.stereotype.Service;
 import service.NewsService;
 
-import java.sql.SQLException;
 import java.util.List;
 
-@Service("newsService")
+@Service
 public class NewsServiceImpl implements NewsService {
 
     private NewsDAO dao;
@@ -19,23 +18,23 @@ public class NewsServiceImpl implements NewsService {
         this.dao = dao;
     }
 
-    public void addNews(News news) throws DAOException, SQLException {
+    public void addNews(News news) throws DAOException {
         dao.addNews(news);
     }
 
-    public News getNewsById(int newsId) throws DAOException, SQLException {
+    public News getNewsById(int newsId) throws DAOException {
         return dao.getNewsById(newsId);
     }
 
-    public void updateNews(News news) throws DAOException, SQLException {
+    public void updateNews(News news) throws DAOException {
         dao.updateNews(news);
     }
 
-    public void deleteNewsById(int newsId) throws DAOException, SQLException {
+    public void deleteNewsById(int newsId) throws DAOException {
         dao.deleteNewsById(newsId);
     }
 
-    public List<News> getAllNews(int userId) throws DAOException, SQLException {
+    public List<News> getAllNews(int userId) throws DAOException {
         return dao.getAllNews(userId);
     }
 }

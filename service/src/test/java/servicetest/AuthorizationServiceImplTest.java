@@ -1,3 +1,6 @@
+package servicetest;
+
+import dao.DAOException;
 import entity.User;
 import org.junit.Assert;
 import org.junit.Before;
@@ -6,11 +9,11 @@ import service.implementation.AuthorizationServiceImpl;
 
 public class AuthorizationServiceImplTest extends Assert {
     private AuthorizationServiceImpl authorizationService;
-    User admin = new User();
-    User user = new User();
+    User admin;
+    User user;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws DAOException {
         authorizationService = new AuthorizationServiceImpl();
         admin.setUserId(1);
         admin.setName("admin");
@@ -26,13 +29,13 @@ public class AuthorizationServiceImplTest extends Assert {
     }
 
     @Test
-    public void testIsAdmin() throws Exception {
+    public void testIsAdmin() throws DAOException {
         assertTrue(authorizationService.isAdmin(admin));
         assertFalse(authorizationService.isAdmin(user));
     }
 
     @Test
-    public void testIsUser() throws Exception {
+    public void testIsUser() throws DAOException {
         assertTrue(authorizationService.isUser(user));
         assertFalse(authorizationService.isUser(admin));
     }

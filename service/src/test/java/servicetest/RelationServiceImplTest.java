@@ -1,3 +1,5 @@
+package servicetest;
+
 import dao.DAOException;
 import dao.implementation.RelationDAOImpl;
 import entity.Relation;
@@ -24,7 +26,7 @@ public class RelationServiceImplTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Before
-    public void setUp() {
+    public void setUp() throws DAOException {
         relationDAO = mock(RelationDAOImpl.class);
 
         relationService = new RelationServiceImpl();
@@ -42,13 +44,13 @@ public class RelationServiceImplTest {
     }
 
     @Test
-    public void testAddRelation() throws Exception {
+    public void testAddRelation() throws DAOException {
         relationService.addRelation(1, 2, 1);
         verify(relationDAO).addRelation(1, 2, 1);
     }
 
     @Test
-    public void testGetRelationById() throws Exception {
+    public void testGetRelationById() throws DAOException {
         when(relationDAO.getRelationById(1)).thenReturn(relation1);
         Relation relation = relationService.getRelationById(1);
         verify(relationDAO).getRelationById(1);
@@ -56,7 +58,7 @@ public class RelationServiceImplTest {
     }
 
     @Test
-    public void testGetRelationById2() throws Exception {
+    public void testGetRelationById2() throws DAOException {
         doThrow(new DAOException("cannot find relation with id = 0")).when(relationDAO).getRelationById(0);
         exception.expect(DAOException.class);
         exception.expectMessage("cannot find relation with id = 0");
@@ -64,19 +66,19 @@ public class RelationServiceImplTest {
     }
 
     @Test
-    public void testUpdateRelation() throws Exception {
+    public void testUpdateRelation() throws DAOException {
         relationService.updateRelation(relation1);
         verify(relationDAO).updateRelation(relation1);
     }
 
     @Test
-    public void testDeleteRelation() throws Exception {
+    public void testDeleteRelation() throws DAOException {
         relationService.deleteRelationBy(1, 2);
         verify(relationDAO).deleteRelationBy(1, 2);
     }
 
     @Test
-    public void testGetAllRelation() throws Exception {
+    public void testGetAllRelation() throws DAOException {
         List<Relation> allRelations = new ArrayList<Relation>();
         int counter = 0;
 

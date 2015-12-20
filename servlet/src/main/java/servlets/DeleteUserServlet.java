@@ -15,12 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 
 @WebServlet("/deleteUser")
 public class DeleteUserServlet extends HttpServlet {
-    private static final Logger log = LogManager.getLogger(DeleteUserServlet.class);
+    private static final Logger LOGGER = LogManager.getLogger(DeleteUserServlet.class);
+    private static final int ADMIN = 1;
     private UserService userService;
 
     public void setUserService(UserService userService) {
@@ -29,7 +29,6 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        final int ADMIN = 1;
         int userId = Integer.parseInt(request.getParameter("userId"));
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
@@ -49,12 +48,10 @@ public class DeleteUserServlet extends HttpServlet {
             }
         }
         catch (DAOException e) {
-            e.printStackTrace();
+            LOGGER.error("Database connection problem", e);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/home.jsp");
             request.setAttribute("errorMessage", errorMessage);
             dispatcher.include(request, response);
-        } catch (SQLException e) {
-            log.error("Cannot execute SQL", e);
         }
     }
 }

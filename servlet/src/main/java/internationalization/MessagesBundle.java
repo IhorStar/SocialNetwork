@@ -9,10 +9,10 @@ public class MessagesBundle {
     private Map<String, String> messages = new HashMap<String, String>();
 
     public Map<String, String> getMessages(String language, String country) {
-        String currentLanguage = null;
-        String currentCountry = null;
-        Locale locale = null;
-        ResourceBundle bundle = null;
+        String currentLanguage;
+        String currentCountry;
+        Locale locale;
+        ResourceBundle bundle;
 
         if(language == null || country == null) {
             currentLanguage = "en";

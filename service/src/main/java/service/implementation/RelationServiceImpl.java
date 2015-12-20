@@ -6,10 +6,9 @@ import entity.Relation;
 import org.springframework.stereotype.Service;
 import service.RelationService;
 
-import java.sql.SQLException;
 import java.util.List;
 
-@Service("relationService")
+@Service
 public class RelationServiceImpl implements RelationService {
 
     private RelationDAO dao;
@@ -18,23 +17,23 @@ public class RelationServiceImpl implements RelationService {
         this.dao = dao;
     }
 
-    public void addRelation(int user1Id, int user2Id, int relationTypeId) throws DAOException, SQLException {
+    public void addRelation(int user1Id, int user2Id, int relationTypeId) throws DAOException {
         dao.addRelation(user1Id, user2Id, relationTypeId);
     }
 
-    public Relation getRelationById(int relationId) throws DAOException, SQLException {
+    public Relation getRelationById(int relationId) throws DAOException {
         return dao.getRelationById(relationId);
     }
 
-    public void updateRelation(Relation relation) throws DAOException, SQLException {
+    public void updateRelation(Relation relation) throws DAOException {
         dao.updateRelation(relation);
     }
 
-    public void deleteRelationBy(int user1Id, int user2Id) throws DAOException, SQLException {
+    public void deleteRelationBy(int user1Id, int user2Id) throws DAOException {
         dao.deleteRelationBy(user1Id, user2Id);
     }
 
-    public List<Relation> getAllRelationBy(int userId) throws DAOException, SQLException {
+    public List<Relation> getAllRelationBy(int userId) throws DAOException {
         return dao.getAllRelationBy(userId);
     }
 }

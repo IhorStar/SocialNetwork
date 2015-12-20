@@ -7,14 +7,15 @@ public class Relation {
     private int user2Id;
     private int relationTypeId;
 
-    public Relation() {
-
-    }
     public Relation(int relationId, int user1Id, int user2Id, int relationTypeId) {
         this.relationId = relationId;
         this.user1Id = user1Id;
         this.user2Id = user2Id;
         this.relationTypeId = relationTypeId;
+    }
+
+    public Relation() {
+
     }
 
     public int getRelationId() {

@@ -1,3 +1,5 @@
+package servicetest;
+
 import dao.DAOException;
 import dao.implementation.RelationTypeDAOImpl;
 import entity.RelationType;
@@ -21,7 +23,7 @@ public class RelationTypeServiceImplTest {
     public ExpectedException exception = ExpectedException.none();
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() throws DAOException {
         relationTypeDAO = mock(RelationTypeDAOImpl.class);
 
         relationTypeService = new RelationTypeServiceImpl();
@@ -33,13 +35,13 @@ public class RelationTypeServiceImplTest {
     }
 
     @Test
-    public void testAddRelationType() throws Exception {
+    public void testAddRelationType() throws DAOException {
         relationTypeService.addRelationType(relationType1);
         verify(relationTypeDAO).addRelationType(relationType1);
     }
 
     @Test
-    public void testGetRelationById() throws Exception {
+    public void testGetRelationById() throws DAOException {
         when(relationTypeDAO.getRelationTypeById(1)).thenReturn(relationType1);
         RelationType relation = relationTypeService.getRelationTypeById(1);
         verify(relationTypeDAO).getRelationTypeById(1);
@@ -47,7 +49,7 @@ public class RelationTypeServiceImplTest {
     }
 
     @Test
-    public void testGetRelationById2() throws Exception {
+    public void testGetRelationById2() throws DAOException {
         doThrow(new DAOException("cannot find relation type with id = 0")).when(relationTypeDAO).getRelationTypeById(0);
         exception.expect(DAOException.class);
         exception.expectMessage("cannot find relation type with id = 0");
@@ -55,13 +57,13 @@ public class RelationTypeServiceImplTest {
     }
 
     @Test
-    public void testUpdateRelationType() throws Exception {
+    public void testUpdateRelationType() throws DAOException {
         relationTypeService.updateRelationType(relationType1);
         verify(relationTypeDAO).updateRelationType(relationType1);
     }
 
     @Test
-    public void testDeleteRelationTypeById() throws Exception {
+    public void testDeleteRelationTypeById() throws DAOException {
         relationTypeService.deleteRelationTypeById(1);
         verify(relationTypeDAO).deleteRelationTypeById(1);
     }
