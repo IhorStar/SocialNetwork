@@ -1,6 +1,5 @@
 package service.implementation;
 
-
 import dao.DAOException;
 import dao.NewsDAO;
 import entity.News;

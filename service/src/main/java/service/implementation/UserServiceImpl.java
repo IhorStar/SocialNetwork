@@ -41,4 +41,11 @@ public class UserServiceImpl implements UserService {
         return dao.getAllUsers();
     }
 
+    public void init() {
+
+    }
+
+    public void destroy() {
+
+    }
 }

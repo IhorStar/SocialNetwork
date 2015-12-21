@@ -3,12 +3,14 @@ package service.implementation;
 import dao.DAOException;
 import dao.RelationDAO;
 import entity.Relation;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import service.RelationService;
 
 import java.util.List;
 
 @Service
+@Scope("prototype")
 public class RelationServiceImpl implements RelationService {
 
     private RelationDAO dao;

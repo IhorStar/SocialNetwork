@@ -5,11 +5,12 @@
 
     <import resource="Spring-DAO.xml"/>
 
-    <bean id="userService" class="service.implementation.UserServiceImpl">
+    <bean id="userService" class="service.implementation.UserServiceImpl" scope="singleton"
+            init-method="init" destroy-method="destroy">
         <property name="dao" ref="userDAO"/>
     </bean>
 
-    <bean id="newsService" class="service.implementation.NewsServiceImpl">
+    <bean id="newsService" class="service.implementation.NewsServiceImpl" scope="prototype">
         <property name="dao" ref="newsDAO"/>
     </bean>
 

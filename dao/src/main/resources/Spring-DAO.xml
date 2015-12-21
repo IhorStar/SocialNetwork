@@ -5,7 +5,7 @@
 
     <import resource="Spring-DataSource.xml"/>
 
-    <bean id="userDAO" class="dao.implementation.UserDAOImpl">
+    <bean id="userDAO" class="dao.implementation.UserDAOImpl" autowire="byName">
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
