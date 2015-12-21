@@ -6,18 +6,21 @@ import entity.Comment;
 import entity.News;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import service.CommentService;
 
 import java.util.List;
 
 @Service
 @Scope("singleton")
-public class CommentServiceImpl implements CommentService {
+public class CommentServiceImpl {
 
     private CommentDAO dao;
 
     public void setDao(CommentDAO dao) {
         this.dao = dao;
+    }
+
+    public static CommentServiceImpl getCommentServiceImpl() {
+        return new CommentServiceImpl();
     }
 
     public void addComment(Comment comment) throws DAOException {

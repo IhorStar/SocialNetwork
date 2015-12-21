@@ -14,11 +14,11 @@
         <property name="dao" ref="newsDAO"/>
     </bean>
 
-    <bean id="commentService" class="service.implementation.CommentServiceImpl">
+    <bean id="commentService" class="service.implementation.CommentServiceImpl" factory-method="getCommentServiceImpl">
         <property name="dao" ref="commentDAO"/>
     </bean>
 
-    <bean id="relationService" class="service.implementation.RelationServiceImpl">
+    <bean id="relationService" class="service.implementation.RelationServiceImpl" lazy-init="true">
         <property name="dao" ref="relationDAO"/>
     </bean>
 
