@@ -25,4 +25,10 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
+    <bean id="daoFactory" class="dao.implementation.PostgresqlDAOFactory"/>
+
+    <bean id="userDAO2" factory-bean="daoFactory" factory-method="getUserDAO"/>
+    <bean id="newsDAO2" factory-bean="daoFactory" factory-method="getNewsDAO"/>
+    <bean id="commentDAO2" factory-bean="daoFactory" factory-method="getCommentDAO"/>
+
 </beans>
