@@ -6,12 +6,13 @@ import entity.Comment;
 import entity.News;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import service.CommentService;
 
 import java.util.List;
 
 @Service
 @Scope("singleton")
-public class CommentServiceImpl {
+public class CommentServiceImpl implements CommentService {
 
     private CommentDAO dao;
 

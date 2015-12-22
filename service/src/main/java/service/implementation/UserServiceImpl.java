@@ -3,6 +3,8 @@ package service.implementation;
 import dao.DAOException;
 import dao.UserDAO;
 import entity.User;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Service;
 import service.UserService;
 
@@ -10,7 +12,7 @@ import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+    private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
     private UserDAO dao;
 
     public void setDao(UserDAO dao) {
@@ -42,10 +44,10 @@ public class UserServiceImpl implements UserService {
     }
 
     public void init() {
-
+        LOGGER.info("Bean is going through init.");
     }
 
     public void destroy() {
-
+        LOGGER.info("Bean will destroy now.");
     }
 }
