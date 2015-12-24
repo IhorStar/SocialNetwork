@@ -18,6 +18,9 @@
     <facet type="Spring" name="Spring">
       <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/../dao/src/main/resources/Spring-DAO.xml</file>
+          <file>file://$MODULE_DIR$/../dao/src/main/resources/Spring-DataSource.xml</file>
+          <file>file://$MODULE_DIR$/../service/src/main/resources/Spring-Service.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/Spring-Servlet.xml</file>
           <file>file://$MODULE_DIR$/src/main/webapp/WEB-INF/spring-servlet.xml</file>
         </fileset>
@@ -35,7 +38,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
     <orderEntry type="module" module-name="service" />
     <orderEntry type="module" module-name="dao" />
     <orderEntry type="library" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" level="project" />
@@ -59,5 +61,6 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-context:4.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-aop:4.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring:2.5.6" level="project" />
   </component>
 </module>

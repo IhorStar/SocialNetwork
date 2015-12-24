@@ -9,8 +9,8 @@ import service.implementation.AuthorizationServiceImpl;
 
 public class AuthorizationServiceImplTest extends Assert {
     private AuthorizationServiceImpl authorizationService;
-    User admin;
-    User user;
+    User admin = new User();
+    User user = new User();
 
     @Before
     public void setUp() throws DAOException {

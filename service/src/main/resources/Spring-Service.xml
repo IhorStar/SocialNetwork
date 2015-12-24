@@ -3,7 +3,6 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
 
-    <import resource="Spring-DAO.xml"/>
 
     <bean id="userService" class="service.implementation.UserServiceImpl" scope="singleton"
             init-method="init" destroy-method="destroy">

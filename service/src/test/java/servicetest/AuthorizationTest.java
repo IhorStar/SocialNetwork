@@ -22,7 +22,7 @@ public class AuthorizationTest {
     @Before
     public void setUp() {
         authorizationService = new AuthorizationServiceImpl();
-        user.setRoleId(1);
+        user.setRoleId(idRole);
     }
 
     public AuthorizationTest(int idRole, boolean expected) {

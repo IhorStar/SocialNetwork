@@ -2,8 +2,10 @@
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
   <component name="FacetManager">
     <facet type="Spring" name="Spring">
-      <configuration process_explicitly_annotated="false">
+      <configuration>
         <fileset id="fileset" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/../dao/src/main/resources/Spring-DAO.xml</file>
+          <file>file://$MODULE_DIR$/../dao/src/main/resources/Spring-DataSource.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/Spring-Service.xml</file>
         </fileset>
       </configuration>
@@ -35,5 +37,6 @@
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-beans:4.2.4.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:4.2.4.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring:2.5.6" level="project" />
   </component>
 </module>

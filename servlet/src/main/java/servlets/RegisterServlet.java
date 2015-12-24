@@ -53,7 +53,7 @@ public class RegisterServlet extends HttpServlet {
         }
         else {
             User user = new User();
-            user.setRoleId();
+            user.setRoleId(2);
             user.setName(name);
             user.setPassword(password);
             user.setEmail(email);
