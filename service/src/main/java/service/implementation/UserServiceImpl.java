@@ -31,6 +31,9 @@ public class UserServiceImpl implements UserService {
         return dao.getUserBy(email, password);
     }
 
+    public User getUserByEmail(String email) throws DAOException{
+        return dao.getUserByEmail(email);
+    }
     public void updateUser(User user) throws DAOException {
         dao.updateUser(user);
     }

@@ -41,6 +41,12 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
+    public User getUserByEmail(String email) throws DAOException {
+        String query = "select * from user where email = ?";
+        jdbcTemplate = new JdbcTemplate(dataSource);
+        User user = (User)jdbcTemplate.queryForObject(query, new Object[]{email}, new UserMapper());
+        return user;
+    }
     public void updateUser(User user) throws DAOException {
         String query = "update user set user_id = ?, name = ?, password = ?, email = ? where user_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
