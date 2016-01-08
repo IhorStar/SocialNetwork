@@ -5,14 +5,15 @@
   <artifactId>SocialNetwork</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
+
   <modules>
     <module>service</module>
     <module>dao</module>
     <module>model</module>
     <module>servlet</module>
     <module>security</module>
-
   </modules>
+
   <name>SocialNetwork Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <properties>
