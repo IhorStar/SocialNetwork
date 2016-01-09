@@ -58,6 +58,9 @@
     </dependencies>
 
     <build>
+
+        <finalName>servlet</finalName>
+
         <plugins>
 
             <plugin>

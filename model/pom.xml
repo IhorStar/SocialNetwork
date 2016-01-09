@@ -12,6 +12,9 @@
     <packaging>jar</packaging>
 
     <build>
+
+        <finalName>model</finalName>
+
         <plugins>
 
             <plugin>
