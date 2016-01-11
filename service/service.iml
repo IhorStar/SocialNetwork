@@ -7,6 +7,7 @@
           <file>file://$MODULE_DIR$/../dao/src/main/resources/Spring-DAO.xml</file>
           <file>file://$MODULE_DIR$/../dao/src/main/resources/Spring-DataSource.xml</file>
           <file>file://$MODULE_DIR$/src/main/resources/Spring-Service.xml</file>
+          <file>file://$MODULE_DIR$/src/main/resources/spring-jpa.xml</file>
         </fileset>
       </configuration>
     </facet>

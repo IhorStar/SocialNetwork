@@ -6,11 +6,13 @@ import entity.User;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import service.UserService;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
     private static final Logger LOGGER = LogManager.getLogger(UserServiceImpl.class);
     private UserDAO dao;
@@ -19,29 +21,37 @@ public class UserServiceImpl implements UserService {
         this.dao = dao;
     }
 
+    @Transactional
     public void addUser(User user) throws DAOException {
         dao.addUser(user);
     }
 
+    @Transactional
     public User getUserById(int userId) throws DAOException {
         return dao.getUserById(userId);
     }
 
+    @Transactional
     public User getUserBy(String email, String password) throws DAOException {
         return dao.getUserBy(email, password);
     }
 
+    @Transactional
     public User getUserByEmail(String email) throws DAOException{
         return dao.getUserByEmail(email);
     }
+
+    @Transactional
     public void updateUser(User user) throws DAOException {
         dao.updateUser(user);
     }
 
+    @Transactional
     public void deleteUserById(int userId) throws DAOException {
         dao.deleteUserById(userId);
     }
 
+    @Transactional
     public List<User> getAllUsers() throws DAOException {
         return dao.getAllUsers();
     }

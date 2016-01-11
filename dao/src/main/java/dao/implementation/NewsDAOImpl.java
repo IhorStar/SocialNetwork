@@ -7,10 +7,12 @@ import entity.News;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Repository
+@Transactional
 public class NewsDAOImpl implements NewsDAO {
     private DriverManagerDataSource dataSource;
     private JdbcTemplate jdbcTemplate;
@@ -19,6 +21,7 @@ public class NewsDAOImpl implements NewsDAO {
         this.dataSource = dataSource;
     }
 
+    @Transactional
     public void addNews(News news) throws DAOException {
         String query = "insert into news values (?, ?, ?, ?, ?);";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -26,6 +29,7 @@ public class NewsDAOImpl implements NewsDAO {
                 news.getTime(), news.getUserId()});
     }
 
+    @Transactional
     public News getNewsById(int newsId) throws DAOException {
         String query = "select * from news where news_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -33,6 +37,7 @@ public class NewsDAOImpl implements NewsDAO {
         return news;
     }
 
+    @Transactional
     public void updateNews(News news) throws DAOException {
         String query = "update news set  description = ?, date = ?, time = ? where news_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -40,12 +45,14 @@ public class NewsDAOImpl implements NewsDAO {
                 news.getTime()});
     }
 
+    @Transactional
     public void deleteNewsById(int newsId) throws DAOException {
         String query = "delete from news where news_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.update(query, new Object[]{newsId});
     }
 
+    @Transactional
     public List<News> getAllNews(int userId) throws DAOException {
         String query = "select * from news where user = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
