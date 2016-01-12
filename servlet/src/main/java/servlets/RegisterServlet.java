@@ -3,6 +3,7 @@ package servlets;
 import dao.DAOException;
 import entity.User;
 import internationalization.MessagesBundle;
+import mail.SendEmailWithRegistrationData;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import service.UserService;
@@ -53,6 +54,7 @@ public class RegisterServlet extends HttpServlet {
         }
         else {
             User user = new User();
+            SendEmailWithRegistrationData sendEmail = new SendEmailWithRegistrationData();
             user.setRoleId(2);
             user.setName(name);
             user.setPassword(password);
@@ -61,6 +63,7 @@ public class RegisterServlet extends HttpServlet {
             try {
                 userService.addUser(user);
                 LOGGER.info("User registered with email: " + email);
+                sendEmail.generateAndSendMessage();
                 User regUser = userService.getUserBy(user.getEmail(), user.getPassword());
                 List allUsers = userService.getAllUsers();
                 HttpSession session = request.getSession(true);
