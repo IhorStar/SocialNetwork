@@ -12,6 +12,7 @@
     <module>model</module>
     <module>servlet</module>
     <module>security</module>
+    <module>hibernate</module>
   </modules>
 
   <name>SocialNetwork Maven Webapp</name>
