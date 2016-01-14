@@ -17,22 +17,18 @@ public class RelationTypeServiceImpl implements RelationTypeService {
         this.dao = dao;
     }
 
-    @Transactional
     public void addRelationType(RelationType relationType) throws DAOException {
         dao.addRelationType(relationType);
     }
 
-    @Transactional
     public RelationType getRelationTypeById(int relationTypeId) throws DAOException {
         return dao.getRelationTypeById(relationTypeId);
     }
 
-    @Transactional
     public void updateRelationType(RelationType relationType) throws DAOException {
         dao.updateRelationType(relationType);
     }
 
-    @Transactional
     public void deleteRelationTypeById(int relationTypeId) throws DAOException {
         dao.deleteRelationTypeById(relationTypeId);
     }

@@ -42,7 +42,7 @@ public class SendEmailWithRegistrationData {
 
             Transport.send(message);
         } catch (MessagingException e) {
-            LOGGER.error("MessagingExeption", e);
+            LOGGER.error("MessagingExсeption", e);
         }
     }
 }

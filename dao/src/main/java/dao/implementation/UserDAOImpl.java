@@ -21,7 +21,6 @@ public class UserDAOImpl implements UserDAO {
         this.dataSource = dataSource;
     }
 
-    @Transactional
     public void addUser(User user) throws DAOException {
         String query = "insert into user(user_id, name, password, email, role_id) values (?, ?, ?, ?);";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -29,16 +28,13 @@ public class UserDAOImpl implements UserDAO {
                 user.getRoleId()});
     }
 
-    @Transactional
     public User getUserById(int id) throws DAOException {
         String query = "select * from user where user_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
         User user = (User) jdbcTemplate.queryForObject(query, new Object[]{id}, new UserMapper());
         return user;
-
     }
 
-    @Transactional
     public User getUserBy(String email, String password) throws DAOException {
         String query = "select * from user where email = ? and password = ?";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -46,7 +42,6 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    @Transactional
     public User getUserByEmail(String email) throws DAOException {
         String query = "select * from user where email = ?";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -54,7 +49,6 @@ public class UserDAOImpl implements UserDAO {
         return user;
     }
 
-    @Transactional
     public void updateUser(User user) throws DAOException {
         String query = "update user set user_id = ?, name = ?, password = ?, email = ? where user_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -62,14 +56,12 @@ public class UserDAOImpl implements UserDAO {
                 user.getRoleId()});
     }
 
-    @Transactional
     public void deleteUserById(int userId) throws DAOException {
         String query = "delete from user where user_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.update(query, new Object[]{userId});
     }
 
-    @Transactional
     public List<User> getAllUsers() throws DAOException {
         String query = "select id, name from user;";
         jdbcTemplate = new JdbcTemplate(dataSource);

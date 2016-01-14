@@ -19,14 +19,12 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         this.dataSource = dataSource;
     }
 
-    @Transactional
     public void addRelationType(RelationType relationType) throws DAOException {
         String query = "insert into relation_type  values (?, ?);";
         jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.update(query, new Object[]{relationType.getRelationTypeId(), relationType.getRelationTypeName()});
     }
 
-    @Transactional
     public RelationType getRelationTypeById(int relationTypeId) throws DAOException {
         String query = "select * from relation_type where relation_type_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -34,14 +32,12 @@ public class RelationTypeDAOImpl implements RelationTypeDAO {
         return relationType;
     }
 
-    @Transactional
     public void updateRelationType(RelationType relationType) throws DAOException {
         String query = "update relation_type set name = ? where relation_type_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.update(query,new Object[]{relationType.getRelationTypeId(), relationType.getRelationTypeName()});
     }
 
-    @Transactional
     public void deleteRelationTypeById(int relationTypeId) throws DAOException {
         String query = "delete from relation_type where relation_type_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);

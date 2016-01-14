@@ -24,7 +24,6 @@ public class CommentDAOImpl implements CommentDAO {
         this.dataSource = dataSource;
     }
 
-    @Transactional
     public void addComment(Comment comment) throws DAOException {
         String query = "insert into comment values (?, ?, ?, ?, ?, ?);";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -32,7 +31,6 @@ public class CommentDAOImpl implements CommentDAO {
                 comment.getDate(), comment.getTime(), comment.getNewsId(), comment.getUserId()});
     }
 
-    @Transactional
     public Comment getCommentById(int commentId) throws DAOException {
         String query = "select * from comment where comment_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -40,7 +38,6 @@ public class CommentDAOImpl implements CommentDAO {
         return  comment;
     }
 
-    @Transactional
     public void updateComment(Comment comment) throws DAOException {
         String query = "update comment set  text = ?, date = ?, time = ? where comment_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -48,14 +45,12 @@ public class CommentDAOImpl implements CommentDAO {
                 comment.getDate(), comment.getTime()});
     }
 
-    @Transactional
     public void deleteCommentById(int commentId) throws DAOException {
         String query = "delete from comment where comment_id = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
         jdbcTemplate.update(query, new Object[]{commentId});
     }
 
-    @Transactional
     public List<Comment> getAllBy(int newsId) throws DAOException {
         String query = "select * from comment where news = ?;";
         jdbcTemplate = new JdbcTemplate(dataSource);
@@ -63,7 +58,6 @@ public class CommentDAOImpl implements CommentDAO {
         return comment;
     }
 
-    @Transactional
     public List<List<Comment>> getAllBy(List<News> allNews) throws DAOException {
         List<List<Comment>> list = new ArrayList<List<Comment>>();
         for(News news : allNews) {
