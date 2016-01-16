@@ -1,6 +1,7 @@
 package service.implementation;
 
 import entity.Comment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import repository.CommentDAO;
@@ -14,6 +15,7 @@ public class CommentServiceImpl implements CommentService {
 
     private CommentDAO dao;
 
+    @Autowired
     public void setDao(CommentDAO dao) {
         this.dao = dao;
     }
