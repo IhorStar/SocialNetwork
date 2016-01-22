@@ -6,14 +6,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 import repository.CommentDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-@Transactional
 public class CommentDAOImpl implements CommentDAO {
 
     private SessionFactory sessionFactory;

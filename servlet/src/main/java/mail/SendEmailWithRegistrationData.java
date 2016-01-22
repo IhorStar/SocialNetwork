@@ -1,6 +1,5 @@
 package mail;
 
-
 import entity.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,7 +23,6 @@ public class SendEmailWithRegistrationData {
     private String internetAddress = user.getEmail();
     private String username = user.getName();
     private String password = user.getPassword();
-    private String emailBody = "Your username: " + username + ", your password: " + password;
 
     public void generateAndSendMessage() {
         properties = System.getProperties();
@@ -38,6 +36,7 @@ public class SendEmailWithRegistrationData {
         try {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(internetAddress));
             message.setSubject("Registration data");
+            String emailBody = "Your username: " + username + ", your password: " + password;
             message.setText(emailBody);
 
             Transport.send(message);
